@@ -1,0 +1,42 @@
+---
+layout: page
+title:
+permalink: /tags/
+---
+
+{% for tag in site.tags %}
+  {% assign t = tag | first %}
+  {% assign posts = tag | last %}
+
+{% if  t == "prog" %}
+<h2 class="tag-cat" id="{{t}}">λ</h2>
+{% elsif t == "psych" %}
+<h2 class="tag-cat" id="{{t}}">Ψ</h2>
+{% elsif t == "philos" %}
+<h2 class="tag-cat" id="{{t}}">Φ</h2>
+{% elsif t == "music" %}
+<h2 class="tag-cat" id="{{t}}">♪</h2>
+{% elsif t == "stats" %}
+<h2 class="tag-cat" id="{{t}}">σ</h2>
+{% elsif t == "cinema" %}
+<h2 class="tag-cat" id="{{t}}">►</h2>
+{% else %}
+<h2 class="tag-cat" id="{{t}}">{{ t }}</h2>
+{% endif %}
+
+<table class="post-list">
+
+{% for post in posts %}
+  {% if post.tags contains t %}
+  <tr>
+      <td class="post-meta-td">
+          <span class="post-meta">{{ post.date | date: "%Y-%m-%d" }}</span>
+      </td>
+      <td class="post-link-td">
+         <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      </td>
+  </tr>
+  {% endif %}
+{% endfor %}
+</table>
+{% endfor %}

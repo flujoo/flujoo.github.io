@@ -1,0 +1,28 @@
+---
+layout: page
+title:
+permalink: /categories/
+---
+
+{% for tag in site.categories %}
+  {% assign t = tag | first %}
+  {% assign posts = tag | last %}
+
+<h2 class="tag-cat" id="{{t}}">{{ t | downcase }}</h2>
+
+<table class="post-list">
+
+{% for post in posts %}
+  {% if post.categories contains t %}
+  <tr>
+      <td class="post-meta-td">
+          <span class="post-meta">{{ post.date | date: "%Y-%m-%d" }}</span>
+      </td>
+      <td class="post-link-td">
+         <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      </td>
+  </tr>
+  {% endif %}
+{% endfor %}
+</table>
+{% endfor %}

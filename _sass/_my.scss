@@ -54,6 +54,13 @@ code, pre {
 	background-color: $color-lighter;
 }
 
+.works {
+	margin: auto;
+	width: 50%;
+	audio {
+		margin-bottom: $spacing-unit;
+	}
+}
 
 
 
@@ -100,7 +107,7 @@ code, pre {
 	}
 }
 
-.post-content {
+.post-content, .works {
 	font-family: $ff-mix;
 	font-size: $size-text;
 	color: $color-text;

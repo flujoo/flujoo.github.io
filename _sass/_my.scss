@@ -60,6 +60,9 @@ code, pre {
 	audio {
 		margin-bottom: $spacing-unit;
 	}
+	@include media-query(414px) {
+	    width: 100%;
+	}
 }
 
 
@@ -267,6 +270,11 @@ a.my-title {
 	}
 }
 
-.tag-cat {
-	
-}
+
+
+
+
+
+
+
+

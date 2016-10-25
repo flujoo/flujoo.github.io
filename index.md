@@ -10,7 +10,7 @@ permalink: /
     <li> • </li>
     <li><a href="{{ "/works/" | prepend: site.baseurl }}">works</a></li>
     <li> • </li>
-    <li><a href="{{ "/articles" | prepend: site.baseurl }}">articles</a></li>
+    <li><a href="{{ "/articles/" | prepend: site.baseurl }}">articles</a></li>
     <li> • </li>
     <li><a href="mailto:tnerrotana@gmail.com">contact</a></li>
     <li> • </li>

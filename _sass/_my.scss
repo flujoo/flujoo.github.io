@@ -54,7 +54,7 @@ code, pre {
 	background-color: $color-lighter;
 }
 
-.works {
+.page-narrow {
 	margin: auto;
 	width: 50%;
 	audio {
@@ -110,7 +110,7 @@ code, pre {
 	}
 }
 
-.post-content, .works {
+.post-content, .page-narrow {
 	font-family: $ff-mix;
 	font-size: $size-text;
 	color: $color-text;
@@ -270,7 +270,9 @@ a.my-title {
 	}
 }
 
-
+.home-nav {
+	font-size: $size-text;
+}
 
 
 

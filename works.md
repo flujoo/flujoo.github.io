@@ -1,5 +1,5 @@
 ---
-layout: works
+layout: page_narrow
 title:
 permalink: /works/
 ---

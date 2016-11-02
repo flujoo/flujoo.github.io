@@ -6,6 +6,12 @@ permalink: /works/
 
 ## 作曲
 
+prelude "Moonlight"
+
+<audio controls>
+  <source src="{{ site.url }}/assets/moonlight.mp3" type="audio/mpeg">
+</audio>
+
 20160918 tango for violin and piano:
 
 <audio controls>

@@ -4,37 +4,42 @@ title:
 permalink: /works/
 ---
 
-## 作曲
+## compositions
 
-prelude "Moonlight"
+prelude *Moonlight* (2007, 20161101):
 
 <audio controls>
   <source src="{{ site.url }}/assets/moonlight.mp3" type="audio/mpeg">
 </audio>
 
-20160918 tango for violin and piano:
+tango for violin & piano (20160918):
 
 <audio controls>
   <source src="{{ site.url }}/assets/20160918.mp3" type="audio/mpeg">
 </audio>
 
-20150221 for cello and piano:
+for cello & piano (20150221):
 
 <audio controls>
   <source src="{{ site.url }}/assets/20150221.mp3" type="audio/mpeg">
 </audio>
 
-nocturne no.1 见 [豆瓣音乐人](http://site.douban.com/lzk/)
+nocturne (2008):
+
+<audio controls>
+  <source src="{{ site.url }}/assets/nocturne.mp3" type="audio/mpeg">
+</audio>
+
+[mirror](https://site.douban.com/lzk/)
 
 
 
+## programs
 
-## 编程
+*papa.js* to stimulate human typing: 
 
-模拟人打字的 JS package:
-
-- [demo](https://flujoo.github.io/papa.js/), 一首诗
-- [代码](https://github.com/flujoo/papa.js)
+- [demo](https://flujoo.github.io/papa.js/)
+- [code](https://github.com/flujoo/papa.js)
 
 
 

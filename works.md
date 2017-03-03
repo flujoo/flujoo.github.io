@@ -1,6 +1,6 @@
 ---
 layout: page_narrow
-title:
+title:  
 permalink: /works/
 ---
 

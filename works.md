@@ -6,7 +6,9 @@ permalink: /works/
 
 ## Compositions
 
-Sonata No.1 for the Korean Film "Memories of Murder" (2019-10-10):
+Sonata No.1 (2019-10-10)
+
+for the Korean Film "Memories of Murder":
 
 <audio controls>
   <source src="{{ site.url }}/assets/20191005_1010_murder.mp3" type="audio/mpeg">

@@ -8,7 +8,7 @@ permalink: /works/
 
 Sonata No.1 (2019-10-10)
 
-inspired from the Korean Film [Memories of Murder](https://www.imdb.com/title/tt0353969/)
+inspired by film [Memories of Murder](https://www.imdb.com/title/tt0353969/)
 
 <audio controls>
   <source src="{{ site.url }}/assets/20191005_1010_murder.mp3" type="audio/mpeg">

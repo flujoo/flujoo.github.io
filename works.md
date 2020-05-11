@@ -6,6 +6,12 @@ permalink: /works/
 
 ## Compositions
 
+Prelude "Wind Is Rising" (2020-05-11)
+
+<audio controls>
+  <source src="{{ site.url }}/assets/wind_is_rising.mp3" type="audio/mpeg">
+</audio>
+
 Sonata No.1 (2019-10-10)
 
 inspired by film [Memories of Murder](https://www.imdb.com/title/tt0353969/)

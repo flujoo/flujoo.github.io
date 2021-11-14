@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>About on flujoo</title>
-    <link>http://example.org/</link>
+    <link>https://flujoo.github.io/</link>
     <description>Recent content in About on flujoo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 29 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://flujoo.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>三类音乐分析</title>
-      <link>http://example.org/cn/three-types-of-music-analysis/</link>
+      <link>https://flujoo.github.io/cn/three-types-of-music-analysis/</link>
       <pubDate>Wed, 29 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/cn/three-types-of-music-analysis/</guid>
+      <guid>https://flujoo.github.io/cn/three-types-of-music-analysis/</guid>
       <description>我们可以从很多角度分析一首音乐作品，比如分析它的风格，分析它的曲式结构，分析它的和声进行，分析它的素材的组织方式，分析它的情感，等等。分析的角度非常多，但我认为这些角度可以归纳为三类。本文将一一探讨这三类音乐分析。在这个过程中，肖邦夜曲 Op. 72 No. 1 会作为贯穿始终的例子。如果你没听过这首夜曲，可以试试 Maurizio Pollini 的演奏版本，那也是最打动我的版本。
 第一类分析：结构与特征 拿到肖邦的夜曲，我们可以先从整体上分析它的特征。比如它的调性是 E 小调，拍速是行板，节拍是 4/4，等等。我们还可以分析它的结构。比如它具有 ABA&amp;rsquo;B&#39; 的曲式。也就是说，这首作品可以分成四个部分，分别是主题 A，主题 B，带有变化的主题 A 和带有变化的主题 B。而对于这四个部分，我们又可以继续分析它们的特征和结构。比如主题 A 为小调，主题 B 为大调。其中主题 A 是一个复合乐段（compound period1），它在结构上可以分为前句（antecedent）和后句（consequent），而这两部分在结构上又可以继续分解。这个过程可以不断继续，直至将整首夜曲分解为一个个音符。
 这种庖丁解牛式的分析便是本文要说的第一类音乐分析。在这类分析中，一首音乐作品可以分解成几个部分，每个部分又可以继续分解为更小的部分。而对于这些部分，我们则可以从音高、节奏、和声等角度分析它们的特征。

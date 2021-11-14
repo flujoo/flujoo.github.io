@@ -1,0 +1,7 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>flujoo | {{ .Title }}</title>
+    {{ $style := resources.Get "main.scss" | toCSS }}
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}" />
+</head>

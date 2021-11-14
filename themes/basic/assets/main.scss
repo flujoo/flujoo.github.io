@@ -1,0 +1,108 @@
+@mixin media-query($device) {
+    @media screen and (max-width: $device) {
+        @content;
+    }
+}
+
+$color-text    : #646464;
+$color-light   : lighten($color-text, 37%);
+$color-lighter : lighten($color-text, 50%);
+$color-dark    : #111;
+
+$size-text : 16px;
+$size-h1   : 40px;
+$size-h2   : 24px;
+$size-meta : 14px;
+
+body {
+    font-family: Avenir, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: $size-text;
+    color: $color-text;
+}
+
+h1, h2, h3, strong {
+    color: $color-dark;
+}
+
+h1 {
+    margin-bottom: 15px;
+    font-size: $size-h1;
+}
+
+h2 {
+    font-size: $size-h2;
+    margin-top: 50px;
+}
+
+.meta {
+    font-size: $size-meta;
+    margin-right: 6px;
+}
+
+.home {
+    font-size: $size-meta;
+    font-weight: normal;
+}
+
+pre {
+    padding: 10px;
+    overflow: auto;
+    font-size: $size-meta;
+}
+
+article {
+    width: 700px;
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 150px;
+
+    @include media-query(700px) {
+        width: 95%;
+        margin-top: 50px;
+        font-size: $size-text * 0.95;
+        
+        h1 {
+            font-size: $size-h1 * 0.9;
+        }
+
+        h2 {
+            font-size: $size-h2 * 0.9;
+        }
+
+        .meta, .home, pre {
+            font-size: $size-meta * 0.95;
+        }
+    } 
+}
+
+header {
+    margin-bottom: 30px;
+}
+
+footer {
+    margin-top: 50px;
+}
+
+hr {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: block;
+    height: 0px;
+    border: 0px;
+    border-top: 1px solid $color-lighter;
+}
+
+a {
+    color: $color-light;
+    text-decoration: none;
+    -webkit-transition: all 0.2s linear 0s;
+    transition: all 0.2s linear 0s;
+
+    &:hover {
+        color: $color-text;
+    }
+}
+
+img {
+    max-width: 100%;
+}

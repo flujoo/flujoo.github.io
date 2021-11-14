@@ -1,0 +1,7 @@
+<footer>
+    {{ if .Params.comment }}
+        <div class="comment">
+            {{ template "_internal/disqus.html" . }}
+        </div>
+    {{ end }}  
+</footer>

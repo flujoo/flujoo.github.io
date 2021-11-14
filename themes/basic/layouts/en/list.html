@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>flujoo | Blog</title>
+        {{ $style := resources.Get "main.scss" | toCSS }}
+        <link rel="stylesheet" href="{{ $style.RelPermalink }}" />
+    </head>
+
+    <body>
+        <article>
+            <header>
+                <h1><span class="home"><a href="/">flujoo</a>'s </span>Blog</h1>
+            </header>
+            <table>
+                <tbody>
+                    {{ range.Pages }}
+                        <tr>
+                            <td>
+                                <span class="meta">
+                                    {{ .Date.Format "2006-01-02" }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="{{ .RelPermalink}}">
+                                    {{ .Title }}
+                                </a>
+                            </td>
+                        </tr>
+                    {{ end }}
+                </tbody>
+            </table>
+        </article>
+    </body>
+</html>

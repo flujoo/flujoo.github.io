@@ -1,0 +1,12 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'flujoo'
+theme='basic'
+disqusShortname="flujoo"
+
+[markup]
+  [markup.highlight]
+    style = 'tango'
+
+[markup.goldmark.renderer]
+  unsafe= true

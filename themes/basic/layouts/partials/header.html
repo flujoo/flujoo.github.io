@@ -1,0 +1,17 @@
+<header>
+    <h1>{{ .Title }}</h1>
+
+    {{ if isset .Params "date" }}
+        <span class="meta">
+            <a href={{ if .Params.cn }}"/cn"{{ else }}"/en"{{ end }}>
+                {{ .Date.Format "2006-01-02" }}
+            </a>
+        </span>
+    {{ end }}
+
+    {{ if isset .Params "tags" }}
+        {{ range .Params.tags }}
+            <span class="meta">{{ . }}</span>
+        {{ end }} 
+    {{ end }}
+</header>

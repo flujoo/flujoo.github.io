@@ -5,7 +5,7 @@ title: About
 
 I compose music, write code, design science-based courses for kids, and am good at self-learning.
 
-[My blog](/en) ([中文](/cn)) is about these topics.
+[My blog](/en) ([中文](/cn)) is about these topics. Get [RSS](/index.xml).
 
 Some of my projects:
 

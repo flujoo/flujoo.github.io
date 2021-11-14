@@ -10,7 +10,7 @@ I compose music, write code, design science-based courses for kids, and am good 
 Some of my projects:
 
 - [R package "gm"](https://github.com/flujoo/gm) for generation of music scores and audio files
-- [music album "Night"]()
+- [music album "Night"](/en/my-music-album-night)
 
 Contact me at renfeimao@gmail.com.
 

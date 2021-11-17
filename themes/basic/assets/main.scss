@@ -93,6 +93,7 @@ hr {
 }
 
 a {
+    word-wrap: break-word;
     color: $color-light;
     text-decoration: none;
     -webkit-transition: all 0.2s linear 0s;

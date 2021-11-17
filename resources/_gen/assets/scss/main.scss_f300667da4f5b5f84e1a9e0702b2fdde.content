@@ -58,6 +58,7 @@ hr {
   border-top: 1px solid #e4e4e4; }
 
 a {
+  word-wrap: break-word;
   color: #c2c2c2;
   text-decoration: none;
   -webkit-transition: all 0.2s linear 0s;

@@ -3,6 +3,7 @@ title: 记忆训练有用吗？
 date: "2019-03-22"
 tags:
     - 心理学
+    - 学习方法
 comment: true
 cn: true
 ---

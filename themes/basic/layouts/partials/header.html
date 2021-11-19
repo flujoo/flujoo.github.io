@@ -7,6 +7,11 @@
                 {{ .Date.Format "2006-01-02" }}
             </a>
         </span>
+
+        <!-- 首页没有 date, 所以这是一个 trick, 用来给 blog 加上返回首页的 link -->
+        <span class="meta">
+            <a href="/">flujoo</a>
+        </span>
     {{ end }}
 
     {{ if isset .Params "tags" }}

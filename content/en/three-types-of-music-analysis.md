@@ -46,7 +46,7 @@ Theorist Heinrich Schenker is another representative of the second type of music
 
 In this example, from a to d, structurally unimportant notes are removed gradually, and the deep structure is revealed. Conversely, from d to a, by the process of **elaboration**, meaningful musical pieces are generated.
 
-Schoenberg's and Schenker's theories are different, but both separate music's appearance from its generative mechanism, and both believe that, **under certain operations, music can be generated from simple and limited materials.** The difference is that in Schoenberg's theory, the operations are repetition, variation, and combination, while in Schenker's are various elaborations.
+Schoenberg and Schenker have different theories, but both separate music's appearance from its generative mechanism, and both believe that, **under certain operations, music can be generated from simple and limited materials.** The difference is that in Schoenberg's theory, the operations are repetition, variation, and combination, while in Schenker's are various elaborations.
 
 Now let's return to Chopin's nocturne. First, consider theme A and A'. This is the beginning of theme A:
 

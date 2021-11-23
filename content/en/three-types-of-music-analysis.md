@@ -23,7 +23,7 @@ These are the nocturne's characteristics and structure at the topmost level. How
 
 Consider theme A. It has many characteristics. For example, its mode is minor, and it has certain harmonic progression. Also, it has certain formal structure, i.e. theme A is a compound period, which consists of an antecedent and a consequent.[^1] 
 
-These are theme A's characteristics and structure, which is a component of the nocturne. And since theme A has two parts, we can still continue to analyse these two parts' characteristics and structure.
+These are theme A's characteristics and structure. And since theme A has two parts, we can still continue to analyse these two parts' characteristics and structure.
 
 This recursive analytic process can continue, until we meet single notes.
 

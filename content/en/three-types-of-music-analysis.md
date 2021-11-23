@@ -32,7 +32,7 @@ This recursive analytic process can continue, until we meet single notes.
 
 If the first type of music analysis is to describe what a musical work looks like, then the second is to figure out why it looks like that.
 
-The second type of music analysis assumes that the musical works we heard or read in scores are only superficial appearances, they are the outcomes of some beneath generative mechanisms. These mechanisms may reflect how composers manipulate and combine musical materials.
+The second type of music analysis assumes that the musical works we heard or read in scores are only superficial appearances; they are the outcomes of some beneath generative mechanisms. These mechanisms may reflect how composers manipulate and combine musical materials.
 
 The famous composer and theorist Arnold Schoenberg is a representative of the second type of music analysis. He always took **motivic development** perspective when analysing music, as in his analysis of the beginning theme of Beethoven's first piano sonata:[^2]
 

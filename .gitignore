@@ -4,3 +4,4 @@ _site
 .hugo_build.lock
 
 .DS_Store
+resources

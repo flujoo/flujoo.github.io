@@ -8,7 +8,7 @@ cn: false
 ---
 
 
-Music analysis is not a single method, framework, or theory, there are many different kinds of it. However, most kinds of music analysis can be put into the three categories I put forward in this blog.
+Music analysis is not a single method, framework, or theory; it has many different kinds. However, most kinds of music analysis can be put into the three categories I put forward in this blog.
 
 Below I will talk about these three types of music analysis. And for illustrative purposes, I will use them to analyse Chopin's nocturne Op.72 No.1. If you have not heard this nocturne yet, I highly recommend [Maurizio Pollini's performance](https://www.youtube.com/watch?v=3W46S8cMitM).
 

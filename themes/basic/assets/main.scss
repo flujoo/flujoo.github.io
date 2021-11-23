@@ -59,19 +59,6 @@ article {
     @include media-query(700px) {
         width: 95%;
         margin-top: 50px;
-        font-size: $size-text * 0.95;
-        
-        h1 {
-            font-size: $size-h1 * 0.9;
-        }
-
-        h2 {
-            font-size: $size-h2 * 0.9;
-        }
-
-        .meta, .home, pre {
-            font-size: $size-meta * 0.95;
-        }
     } 
 }
 

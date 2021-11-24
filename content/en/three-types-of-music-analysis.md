@@ -113,7 +113,7 @@ The third passage is theme A'. Here is an excerpt:
 
 In this passage, the previously suppressed emotions burst out, with great intensity. Musically, the chromatic notes, tuplets, trills, and ascending melodic motion obviously contribute to this feeling.
 
-However, there are also passages which convey feelings that I do not like. For example, theme B has some sweet and hopeful feeling, because of its major modality, which I think destroys the prevailing sad and cold mood.
+However, there are also passages which convey feelings that I do not like. For example, theme B has some sweet and hopeful feeling, because of its major modality, which I think harms the prevailing sad and cold mood.
 
 It is worth to point out that the passage towards which you have strong feelings, is not necessarily important from the perspective of structure, generative mechanism, or creativity. For example, the last two notes of the accompaniment motifs are surely replaceable, as long as the new notes are harmonically suitable.
 

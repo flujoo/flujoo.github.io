@@ -8,16 +8,14 @@ cn: false
 ---
 
 
-In this blog, I will tackle this problem:
-
 Given a harmonic progression and the first accompaniment motif, how to automatically generate the whole accompaniment progression?
 
-R language and [R package "gm"](https://github.com/flujoo/gm) will be used in the process.
+I will tackle this problem in this blog with R language and [R package "gm"](https://github.com/flujoo/gm).
 
 
 ## Some Explanations
 
-Here are some explanations. Take the beginning of Chopin's nocturne Op.9 No.1 as an example:
+Here are some explanations of the terms used. Take the beginning of Chopin's nocturne Op.9 No.1 as an example:
 
 ![](pics/nocturne.png)
 
@@ -69,7 +67,70 @@ This "move as minimum as possible" principle is no accident. Some theorist calls
 Now let's implement these rules in R.
 
 
-## 
+## Representation of Motifs and Harmonies
+
+From data structure perspective, a motif is just a list of notes, and each note has two components, which are pitch and duration. However, to simplify the problem, durations are ignored here. Therefore, a motif is a list of pitches.
+
+To represent pitches, [MIDI note numbers](https://en.wikipedia.org/wiki/Scientific_pitch_notation#Table_of_note_frequencies) rather than scientific pitch notations such as `"E4"` are used, for ease of operation. Therefore, a motif can be represented as a vector of integers in R. For example, the first accompaniment motif of Chopin's nocturne can be represented as
+
+```r
+c(46, 53, 61, 58, 65, 53)
+```
+
+It is equivalent to
+
+```r
+c("B-2", "F3", "D-4", "B-3", "F4", "F3")
+```
+
+A harmony is a list of [pitch classes](https://en.wikipedia.org/wiki/Pitch_class#Other_ways_to_label_pitch_classes). It can be represented as a vector of integers. For example, C major can be represented as
+
+```r
+c(0, 4, 7)
+```
+
+It is equivalent to
+
+```r
+c("C", "E", "G")
+```
+
+
+## Show Motifs
+
+We can use [R package "gm"](https://github.com/flujoo/gm) to show the first motif:
+
+```r
+library(gm)
+
+# pitches
+ps <- as.list(c(46, 53, 61, 58, 65, 53))
+
+# durations
+ds <- rep(list(0.5), 6)
+
+m <-
+    Music() +
+    Tempo(110) +
+    Meter(6, 4) +
+    Key(-5) +
+    Line(ps, ds) + 
+    Clef("F", to = 1)
+
+show(m, to = c("score", "audio"))
+```
+
+![](pics/gm.png)
+
+<audio controls>
+  <source src="audio/gm.mp3" type="audio/mpeg">
+</audio>
+
+The code is straightforward. See the documentation of "gm" for more details.
+
+
+## Core Functions
+
 
 
 [^1]: Huron, D. (2001). Tone and voice: A derivation of the rules of voice-leading from perceptual principles. Music Perception, 19(1), 1-64.

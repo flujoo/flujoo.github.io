@@ -203,7 +203,7 @@ generate_motifs <- function(motif, harmony) {
 }
 ```
 
-Let's test this function on the first accompaniment motif of Chopin's nocturne:
+From the first accompaniment motif of Chopin's nocturne, we can generate the candidates for the next accompaniment motif:
 
 ```r
 motifs <- generate_motifs(
@@ -211,22 +211,118 @@ motifs <- generate_motifs(
     c(5, 9, 0, 3)
 )
 
-show_motif(unlist(motifs))
+length(motifs)
+
+#> [1] 64
 ```
 
-![](pics/candidates.png)
-
-<audio controls>
-  <source src="audio/candidates.mp3" type="audio/mpeg">
-</audio>
-
-This is overwhelming. Let's select only the best one.
+There are total 64 candidates! This is overwhelming. Let's create a function to select only the best one.
 
 
 ## Select from Candidates
 
-Although we have got a lot of candidates, they are not equally good. For example, some candidates have ugly contours, and some do not fully reify the background harmony.
+These candidates are not all equally good. Some do not fully reify the background harmony, such as the 52rd motif:
 
+```r
+show_motif(motifs[[52]])
+```
+
+![](pics/52.png)
+
+This motif does not have pitch class E♭.
+
+And some candidates have ugly contours so that they do not sound very good, such as the ninth motif:
+
+```r
+show_motif(motifs[[9]])
+```
+
+![](pics/9.png)
+
+The third and fourth pitch of this motif are the same.
+
+Let's create functions to screen out ill-formed motifs.
+
+```r
+# check if a motif fully reify the given harmony
+is_complete <- function(motif, harmony) {
+    all(harmony %in% (motif %% 12))
+}
+
+# check if a motif has the same contour as the original one
+has_same_contour <- function(motif, motif_0) {
+    all(order(motif) == order(motif_0))
+}
+
+# wrap these functions
+is_good <- function(motif, harmony, motif_0) {
+    is_complete(motif, harmony) &&
+        has_same_contour(motif, motif_0)
+}
+```
+
+Now let's do the screening.
+
+```r
+motifs <- Filter(
+    function(motif) is_good(
+        motif,
+        c(5, 9, 0, 3),
+        c(46, 53, 61, 58, 65, 53)
+    ),
+
+    motifs
+)
+
+length(motifs)
+
+#> [1] 18
+```
+
+We still have a lot of candidates, and we can write more screening functions to reduce candidates. For example, for a dominant 7th harmony, the third should not be doubled. However, to simplify the problem, we will stop here, and just take the first candidate.
+
+
+## Generate Progression
+
+Now let's put these together. We will create a single function that takes a motif and a harmony progression as input, generates an entire accompaniment progression, and show it.
+
+```r
+generate_progression <- function(motif, harmonies) {
+    prog <- list(motif)
+    m0 <- motif
+
+    for (h in harmonies) {
+        ms <- generate_motifs(m0, h)
+        m <- Filter(function(m) is_good(m, h, m0), ms)[[1]]
+        m0 <- m
+        prog <- c(prog, m)
+    }
+
+    show_motif(unlist(prog))
+}
+```
+
+Let's try it on some harmony progression.
+
+```r
+hs <- list(
+    c(3, 6, 10),
+    c(5, 9, 0, 3),
+    c(10, 1, 5)
+)
+
+m <- c(46, 53, 61, 58, 65, 53)
+
+generate_progression(m, hs)
+```
+
+![](pics/prog.png)
+
+<audio controls>
+  <source src="audio/prog.mp3" type="audio/mpeg">
+</audio>
+
+Not too bad!
 
 
 [^1]: Huron, D. (2001). Tone and voice: A derivation of the rules of voice-leading from perceptual principles. Music Perception, 19(1), 1-64.

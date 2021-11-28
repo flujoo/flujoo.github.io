@@ -60,7 +60,7 @@ However, the differences caused by adaptation are kept as minimum as possible. F
 
 ![](pics/f3.png)
 
-Also, the pitch of the third note of the first motif is D♭4, but there is no D♭ in the pitch classes of F dominant 7th, so it has to move to a nearest pitch, which here is E♭4.
+Also, the pitch of the third note of the first motif is D♭4, but there is no D♭ in the pitch classes of F dominant 7th, so it moves to a nearest pitch E♭4.
 
 ![](pics/d_flat_4.png)
 
@@ -171,7 +171,7 @@ get_pitches(61, c(5, 9, 0, 3))
 #> [1] 60 63
 ``` 
 
-This function works well.
+The result is correct.
 
 
 ## Generate Candidate Motifs
@@ -284,7 +284,7 @@ length(motifs)
 #> [1] 18
 ```
 
-We still have a lot of candidates, and we can write more screening functions to reduce the number of candidates. For example, for a dominant 7th harmony, the third should not be doubled. However, to simplify the problem, we will stop here, and just take the first candidate.
+We still have 18 candidates. We can write more screening functions to reduce the number. For example, for a dominant 7th harmony, the third should not be doubled. However, to simplify the problem, we will stop here, and just take the first candidate.
 
 
 ## Generate Progression
@@ -332,7 +332,27 @@ Not too bad!
 
 ## Discussion
 
+As mentioned earlier, this solution has some limitations, mainly because accompaniment motifs can have far more complex structures. For example, they can contain pedal notes as in Chopin's nocturne Op.9 No.1:
 
+![](pics/pedal.png)
+
+chords as in Chopin's nocturne Op.9 No.2:
+
+![](pics/chord.png)
+
+non-harmonic notes as in Chopin's nocturne Op.72 No.1:
+
+![](pics/non.png)
+
+more than one voice as in Chopin's nocturne Op.15 No.1:
+
+![](pics/voice.png)
+
+However, with this being said, the idea behind this solution applies not only to accompaniment motifs, but also to melodic motifs and even bigger structures, as in Beethoven's first piano sonata:
+
+![](pics/beethoven.png)
+
+See my other blog [Three Types of Music Analysis](/en/three-types-of-music-analysis) for some discussion.
 
 
 [^1]: Huron, D. (2001). Tone and voice: A derivation of the rules of voice-leading from perceptual principles. Music Perception, 19(1), 1-64.

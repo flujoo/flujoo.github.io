@@ -1,6 +1,6 @@
 ---
 title: Generate Accompaniment Progression
-date: "2021-11-27"
+date: "2021-11-28"
 tags:
     - music
 comment: true
@@ -8,14 +8,16 @@ cn: false
 ---
 
 
-Given a harmonic progression and the first accompaniment motif, how to automatically generate the whole accompaniment progression?
+Given a harmonic progression and the first accompaniment motif, how to automatically generate an entire accompaniment progression?
 
-I will tackle this problem in this blog with R language and [R package "gm"](https://github.com/flujoo/gm).
+In this blog, I will tackle this problem with R language and [R package "gm"](https://github.com/flujoo/gm). Please note that, for illustrative purposes, the solution presented here is only a simplified version. I will talk more about this in the last section.
+
+Let's first clarify the problem, before diving into it.
 
 
-## Some Explanations
+## Clarify the Problem
 
-Here are some explanations of the terms used. Take the beginning of Chopin's nocturne Op.9 No.1 as an example:
+Take the beginning of Chopin's nocturne Op.9 No.1 as an example:
 
 ![](pics/nocturne.png)
 
@@ -37,7 +39,7 @@ Thus the problem here is that, given only a starting accompaniment motif such as
 
 ![](pics/motif.png)
 
-and a harmonic progression such as B♭m, F7, B♭m and B♭m or other ones, how to generate the whole accompaniment progression such as
+and a harmonic progression such as B♭m, F7, B♭m and B♭m or other ones, how to generate an entire accompaniment progression such as
 
 ![](pics/accompaniment.png)
 
@@ -52,7 +54,7 @@ Let's have a look of the first two accompaniment motifs to gain some insights:
   <source src="audio/two.mp3" type="audio/mpeg">
 </audio>
 
-They have almost the same morphology. Their differences are caused by the background harmonies. When the first accompaniment motif moves into or repeats in a new "harmonic environment", it has to change some pitches to adapt to the new environment.
+They have almost the same morphology. Their only differences are caused by the background harmonies. When the first accompaniment motif moves into or repeats in a new "harmonic environment", it has to change some pitches to adapt to the new environment.
 
 However, the differences caused by adaptation are kept as minimum as possible. For example, the pitch of the second note of the first motif is F3, and that of the second motif is also F3. Since the harmony behind the second motif is F dominant 7th whose pitch classes include F, there is no need for F3 to change.
 
@@ -62,18 +64,16 @@ Also, the pitch of the third note of the first motif is D♭4, but there is no D
 
 ![](pics/d_flat_4.png)
 
-This "move as minimum as possible" principle is no accident. Some theorist calls it **common tone rule** and **nearest chordal tone rule**.[^1] These rules are like "industrial standards", which are taught in textbooks and usually followed by composers. They are also the core of the solution to our problem.
+This "move as minimum as possible" principle is no accident. Some theorist calls it **common tone rule** and **nearest chordal tone rule**.[^1] These rules are like "industrial standards", which are taught in textbooks and usually followed by composers. They are also the core of the solution to our problem, which can be stated as follows:
 
-The solution can be stated as follows:
-
-To generate an accompaniment progression, we repeat the first motif in the second harmony of the harmonic progression to generate the second motif, making sure that "move as minimum as possible" principle is obeyed in the process. Repeat this, until the entire accompaniment progression is generated.
+Suppose we have a starting accompaniment motif and a harmonic progression. We first make this motif adapt to the first harmony from the harmonic progression, to generate the second accompaniment motif. In the process, "move as minimum as possible" principle is obeyed. We then make the second motif adapt to the second harmony to generate the third motif. Repeat this process, until an entire accompaniment progression is generated.
 
 Now let's implement this in R.
 
 
-## Representation of Motifs and Harmonies
+## Represent Motifs and Harmonies
 
-From data structure perspective, a motif is just a list of notes, and each note has two components, which are pitch and duration. However, to simplify the problem, durations are ignored here. Therefore, a motif is a list of pitches.
+From data structure perspective, a motif is just a list of notes or chords, and each note has two components, which are pitch and duration. However, to simplify the problem, chords and durations are ignored here. Therefore, a motif is a list of pitches.
 
 To represent pitches, [MIDI note numbers](https://en.wikipedia.org/wiki/Scientific_pitch_notation#Table_of_note_frequencies) rather than scientific pitch notations such as E4 are used, for ease of operation. Therefore, a motif can be represented as a vector of integers in R. For example, the first accompaniment motif of Chopin's nocturne can be represented as
 
@@ -130,7 +130,7 @@ show(m, to = c("score", "audio"))
   <source src="audio/gm.mp3" type="audio/mpeg">
 </audio>
 
-The code is straightforward. See the documentation of "gm" for more details.
+The code is straightforward. See [the documentation of "gm"](https://flujoo.github.io/gm/articles/gm.html) for more details.
 
 Let's wrap the code into a function for further use:
 
@@ -154,17 +154,16 @@ show_motif <- function(motif) {
 
 ## Get Neighbor Pitches
 
-As mentioned above, if certain pitch in a motif does not match the new harmony, it has to move to a nearest pitch. Let's first create a function that gets a pitch's neighbor pitches:
+As mentioned above, if a pitch in a motif does not match the new harmony, it has to move to a nearest pitch. So we need a function that gets a pitch's neighbor pitches:
 
 ```r
-# a single numeric -> a numeric vector
 get_pitches <- function(pitch, harmony) {
     ps <- pitch + -2:2
     ps[(ps %% 12) %in% harmony]
 }
 ```
 
-Let's have a test. Suppose we have a pitch D♭4 whose MIDI note number is 61, and a harmony F dominant 7th whose pitch classes are F, A, C and E♭ or 5, 9, 0 and 3.
+Let's have a test. Suppose we have a pitch D♭4 whose MIDI note number is 61, and a harmony F dominant 7th whose pitch classes are F, A, C and E♭, or 5, 9, 0 and 3. The neighbor pitches of D♭4 should be C4 and E♭4, or 60 and 63.
 
 ```r
 get_pitches(61, c(5, 9, 0, 3))
@@ -172,17 +171,23 @@ get_pitches(61, c(5, 9, 0, 3))
 #> [1] 60 63
 ``` 
 
-So under harmony F dominant 7th, the neighbor pitches of D♭4 are C4 and E♭4, which is correct.
+This function works well.
 
 
-## Generate Candidates
+## Generate Candidate Motifs
 
-As you have seen in the above example, a pitch can have more than one neighbor pitch in a new harmony. That is to say, a motif can generate more than one motif in a new harmony. Therefore, instead of generating only one new motif, we generate many candidates and select the best one from them. Let's create a function to generate candidates:
+As you have seen in the above example, a pitch can have more than one neighbor pitch in a new harmony, which means that a motif can generate more than one motif in a new harmony.
+
+Now we have two strategic options. First, we write a function which takes a motif as input and returns exactly one motif. Second, we write two functions, the first of which generates some candidate motifs, and the second of which selects the best one from those candidates.
+
+The first strategy is straightforward, but in my experience, the second strategy, which we will take, is far easier to implement.
+
+Let's first create a function to generate candidates, which takes a motif and returns a list of motifs:
 
 ```r
+# use pipe operator `%>%`
 library(magrittr)
 
-# a motif -> a list of motifs
 generate_motifs <- function(motif, harmony) {
     ps <- mapply(
         get_pitches,
@@ -203,7 +208,7 @@ generate_motifs <- function(motif, harmony) {
 }
 ```
 
-From the first accompaniment motif of Chopin's nocturne, we can generate the candidates for the next accompaniment motif:
+Let's try this function on the first motif of Chopin's nocturne:
 
 ```r
 motifs <- generate_motifs(
@@ -241,7 +246,7 @@ show_motif(motifs[[9]])
 
 The third and fourth pitch of this motif are the same.
 
-Let's create functions to screen out ill-formed motifs.
+Let's create some functions to screen out ill-formed motifs.
 
 ```r
 # check if a motif fully reify the given harmony
@@ -254,14 +259,14 @@ has_same_contour <- function(motif, motif_0) {
     all(order(motif) == order(motif_0))
 }
 
-# wrap these functions
+# wrap the above two functions
 is_good <- function(motif, harmony, motif_0) {
     is_complete(motif, harmony) &&
         has_same_contour(motif, motif_0)
 }
 ```
 
-Now let's do the screening.
+Let's try this function on those 64 candidates:
 
 ```r
 motifs <- Filter(
@@ -279,12 +284,12 @@ length(motifs)
 #> [1] 18
 ```
 
-We still have a lot of candidates, and we can write more screening functions to reduce candidates. For example, for a dominant 7th harmony, the third should not be doubled. However, to simplify the problem, we will stop here, and just take the first candidate.
+We still have a lot of candidates, and we can write more screening functions to reduce the number of candidates. For example, for a dominant 7th harmony, the third should not be doubled. However, to simplify the problem, we will stop here, and just take the first candidate.
 
 
 ## Generate Progression
 
-Now let's put these together. We will create a single function that takes a motif and a harmony progression as input, generates an entire accompaniment progression, and show it.
+Now let's put all these together. We will create a single function that takes a motif and a harmony progression as input, generates an entire accompaniment progression, and shows it:
 
 ```r
 generate_progression <- function(motif, harmonies) {
@@ -302,18 +307,18 @@ generate_progression <- function(motif, harmonies) {
 }
 ```
 
-Let's try it on some harmony progression.
+Let's try it on some harmony progression:
 
 ```r
-hs <- list(
+motif <- c(46, 53, 61, 58, 65, 53)
+
+harmonies <- list(
     c(3, 6, 10),
     c(5, 9, 0, 3),
     c(10, 1, 5)
 )
 
-m <- c(46, 53, 61, 58, 65, 53)
-
-generate_progression(m, hs)
+generate_progression(motif, harmonies)
 ```
 
 ![](pics/prog.png)
@@ -323,6 +328,11 @@ generate_progression(m, hs)
 </audio>
 
 Not too bad!
+
+
+## Discussion
+
+
 
 
 [^1]: Huron, D. (2001). Tone and voice: A derivation of the rules of voice-leading from perceptual principles. Music Perception, 19(1), 1-64.

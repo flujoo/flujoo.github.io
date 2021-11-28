@@ -6,7 +6,19 @@
     <description>Recent content in music on flujoo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://flujoo.github.io/tags/music/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://flujoo.github.io/tags/music/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Generate Accompaniment Progression</title>
+      <link>https://flujoo.github.io/en/generate-accompaniment-progression/</link>
+      <pubDate>Sun, 28 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://flujoo.github.io/en/generate-accompaniment-progression/</guid>
+      <description>Given a harmonic progression and the first accompaniment motif, how to automatically generate an entire accompaniment progression?
+In this blog, I will tackle this problem with R language and R package &amp;ldquo;gm&amp;rdquo;. Please note that, for illustrative purposes, the solution presented here is only a simplified version. I will talk more about this in the last section.
+Let&amp;rsquo;s first clarify the problem, before diving into it.
+Clarify the Problem Take the beginning of Chopin&amp;rsquo;s nocturne Op.</description>
+    </item>
+    
     <item>
       <title>Three Types of Music Analysis</title>
       <link>https://flujoo.github.io/en/three-types-of-music-analysis/</link>

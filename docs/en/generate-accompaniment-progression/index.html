@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Generate Accompaniment Progression</title>
+    
+    <link rel="stylesheet" href="/main.css" />
+</head>
+<body>
+        <article><header>
+    <h1>Generate Accompaniment Progression</h1>
+
+    
+        <span class="meta">
+            <a href="/en">
+                2021-11-28
+            </a>
+        </span>
+
+        
+        <span class="meta">
+            <a href="/">flujoo</a>
+        </span>
+    
+
+    
+        
+            <span class="meta">music</span>
+         
+    
+</header>
+<main><p>Given a harmonic progression and the first accompaniment motif, how to automatically generate an entire accompaniment progression?</p>
+<p>In this blog, I will tackle this problem with R language and <a href="https://github.com/flujoo/gm">R package &ldquo;gm&rdquo;</a>. Please note that, for illustrative purposes, the solution presented here is only a simplified version. I will talk more about this in the last section.</p>
+<p>Let&rsquo;s first clarify the problem, before diving into it.</p>
+<h2 id="clarify-the-problem">Clarify the Problem</h2>
+<p>Take the beginning of Chopin&rsquo;s nocturne Op.9 No.1 as an example:</p>
+<p><img src="pics/nocturne.png" alt=""></p>
+<audio controls>
+  <source src="audio/nocturne.mp3" type="audio/mpeg">
+</audio>
+<p>By <strong>accompaniment motifs</strong>, I mean the structures in the red frames in the following score:</p>
+<p><img src="pics/motifs.png" alt=""></p>
+<audio controls>
+  <source src="audio/accompaniment.mp3" type="audio/mpeg">
+</audio>
+<p>By <strong>harmonic progression</strong>, I mean the sequence of the background harmonies behind these accompaniment motifs, which is B♭m, F7, B♭m and B♭m.</p>
+<p>Thus the problem here is that, given only a starting accompaniment motif such as</p>
+<p><img src="pics/motif.png" alt=""></p>
+<p>and a harmonic progression such as B♭m, F7, B♭m and B♭m or other ones, how to generate an entire accompaniment progression such as</p>
+<p><img src="pics/accompaniment.png" alt=""></p>
+<h2 id="main-idea">Main Idea</h2>
+<p>Let&rsquo;s have a look of the first two accompaniment motifs to gain some insights:</p>
+<p><img src="pics/two.png" alt=""></p>
+<audio controls>
+  <source src="audio/two.mp3" type="audio/mpeg">
+</audio>
+<p>They have almost the same morphology. Their only differences are caused by the background harmonies. When the first accompaniment motif moves into or repeats in a new &ldquo;harmonic environment&rdquo;, it has to change some pitches to adapt to the new environment.</p>
+<p>However, the differences caused by adaptation are kept as minimum as possible. For example, the pitch of the second note of the first motif is F3, and that of the second motif is also F3. Since the harmony behind the second motif is F dominant 7th whose pitch classes include F, there is no need for F3 to change.</p>
+<p><img src="pics/f3.png" alt=""></p>
+<p>Also, the pitch of the third note of the first motif is D♭4, but there is no D♭ in the pitch classes of F dominant 7th, so it moves to a nearest pitch E♭4.</p>
+<p><img src="pics/d_flat_4.png" alt=""></p>
+<p>This &ldquo;move as minimum as possible&rdquo; principle is no accident. Some theorist calls it <strong>common tone rule</strong> and <strong>nearest chordal tone rule</strong>.<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> These rules are like &ldquo;industrial standards&rdquo;, which are taught in textbooks and usually followed by composers. They are also the core of the solution to our problem, which can be stated as follows:</p>
+<p>Suppose we have a starting accompaniment motif and a harmonic progression. We first make this motif adapt to the first harmony from the harmonic progression, to generate the second accompaniment motif. In the process, &ldquo;move as minimum as possible&rdquo; principle is obeyed. We then make the second motif adapt to the second harmony to generate the third motif. Repeat this process, until an entire accompaniment progression is generated.</p>
+<p>Now let&rsquo;s implement this in R.</p>
+<h2 id="represent-motifs-and-harmonies">Represent Motifs and Harmonies</h2>
+<p>From data structure perspective, a motif is just a list of notes or chords, and each note has two components, which are pitch and duration. However, to simplify the problem, chords and durations are ignored here. Therefore, a motif is a list of pitches.</p>
+<p>To represent pitches, <a href="https://en.wikipedia.org/wiki/Scientific_pitch_notation#Table_of_note_frequencies">MIDI note numbers</a> rather than scientific pitch notations such as E4 are used, for ease of operation. Therefore, a motif can be represented as a vector of integers in R. For example, the first accompaniment motif of Chopin&rsquo;s nocturne can be represented as</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">46</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">53</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">61</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">58</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">65</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">53</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p>It is equivalent to</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;B-2&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;F3&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;D-4&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;B-3&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;F4&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;F3&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p>A harmony is a list of <a href="https://en.wikipedia.org/wiki/Pitch_class#Other_ways_to_label_pitch_classes">pitch classes</a>. It can be represented as a vector of integers. For example, C major can be represented as</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">7</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p>It is equivalent to</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;C&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;E&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;G&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><h2 id="show-motifs">Show Motifs</h2>
+<p>We can use <a href="https://github.com/flujoo/gm">R package &ldquo;gm&rdquo;</a> to show the first motif:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">gm</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># pitches</span>
+<span style="color:#000">ps</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">as.list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">46</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">53</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">61</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">58</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">65</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">53</span><span style="color:#000;font-weight:bold">))</span>
+
+<span style="color:#8f5902;font-style:italic"># durations</span>
+<span style="color:#000">ds</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0.5</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#0000cf;font-weight:bold">6</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">m</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span>
+    <span style="color:#000">Music</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+    <span style="color:#000">Tempo</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">110</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+    <span style="color:#000">Meter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">6</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+    <span style="color:#000">Key</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">-5</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+    <span style="color:#000">Line</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ps</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ds</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+    <span style="color:#000">Clef</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;F&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">to</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">show</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">m</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">to</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;score&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;audio&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</code></pre></div><p><img src="pics/gm.png" alt=""></p>
+<audio controls>
+  <source src="audio/gm.mp3" type="audio/mpeg">
+</audio>
+<p>The code is straightforward. See <a href="https://flujoo.github.io/gm/articles/gm.html">the documentation of &ldquo;gm&rdquo;</a> for more details.</p>
+<p>Let&rsquo;s wrap the code into a function for further use:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">show_motif</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">ps</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">as.list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">ds</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0.5</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span><span style="color:#000;font-weight:bold">))</span>
+
+    <span style="color:#000">m</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span>
+        <span style="color:#000">Music</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+        <span style="color:#000">Tempo</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">110</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+        <span style="color:#000">Meter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">6</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+        <span style="color:#000">Key</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">-5</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+        <span style="color:#000">Line</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ps</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ds</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+        <span style="color:#000">Clef</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;F&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">to</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span>
+
+    <span style="color:#000">show</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">m</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">to</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;score&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;audio&#34;</span><span style="color:#000;font-weight:bold">))</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><h2 id="get-neighbor-pitches">Get Neighbor Pitches</h2>
+<p>As mentioned above, if a pitch in a motif does not match the new harmony, it has to move to a nearest pitch. So we need a function that gets a pitch&rsquo;s neighbor pitches:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">get_pitches</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pitch</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">harmony</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">ps</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">pitch</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">-2</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">2</span>
+    <span style="color:#000">ps</span><span style="color:#000">[</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ps</span> <span style="color:#ce5c00;font-weight:bold">%%</span> <span style="color:#0000cf;font-weight:bold">12</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%in%</span> <span style="color:#000">harmony]</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>Let&rsquo;s have a test. Suppose we have a pitch D♭4 whose MIDI note number is 61, and a harmony F dominant 7th whose pitch classes are F, A, C and E♭, or 5, 9, 0 and 3. The neighbor pitches of D♭4 should be C4 and E♭4, or 60 and 63.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">get_pitches</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">61</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">9</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">))</span>
+
+<span style="color:#8f5902;font-style:italic">#&gt; [1] 60 63</span>
+</code></pre></div><p>The result is correct.</p>
+<h2 id="generate-candidate-motifs">Generate Candidate Motifs</h2>
+<p>As you have seen in the above example, a pitch can have more than one neighbor pitch in a new harmony, which means that a motif can generate more than one motif in a new harmony.</p>
+<p>Now we have two strategic options. First, we write a function which takes a motif as input and returns exactly one motif. Second, we write two functions, the first of which generates some candidate motifs, and the second of which selects the best one from those candidates.</p>
+<p>The first strategy is straightforward, but in my experience, the second strategy, which we will take, is far easier to implement.</p>
+<p>Let&rsquo;s first create a function to generate candidates, which takes a motif and returns a list of motifs:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># use pipe operator `%&gt;%`</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">magrittr</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">generate_motifs</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">harmony</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">ps</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">mapply</span><span style="color:#000;font-weight:bold">(</span>
+        <span style="color:#000">get_pitches</span><span style="color:#000;font-weight:bold">,</span>
+        <span style="color:#000">as.list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span><span style="color:#000;font-weight:bold">),</span>
+        <span style="color:#000">MoreArgs</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">harmony</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">harmony</span><span style="color:#000;font-weight:bold">),</span>
+        <span style="color:#000">SIMPLIFY</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span>
+    <span style="color:#000;font-weight:bold">)</span>
+
+    <span style="color:#000">motifs</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> 
+        <span style="color:#000">ps</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+        <span style="color:#000">expand.grid</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+        <span style="color:#000">t</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+        <span style="color:#000">as.data.frame</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+        <span style="color:#000">as.list</span><span style="color:#000;font-weight:bold">()</span>
+
+    <span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motifs</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">NULL</span>
+    <span style="color:#000">motifs</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>Let&rsquo;s try this function on the first motif of Chopin&rsquo;s nocturne:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">motifs</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">generate_motifs</span><span style="color:#000;font-weight:bold">(</span>
+    <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">46</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">53</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">61</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">58</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">65</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">53</span><span style="color:#000;font-weight:bold">),</span>
+    <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">9</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motifs</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic">#&gt; [1] 64</span>
+</code></pre></div><p>There are total 64 candidates! This is overwhelming. Let&rsquo;s create a function to select only the best one.</p>
+<h2 id="select-from-candidates">Select from Candidates</h2>
+<p>These candidates are not all equally good. Some do not fully reify the background harmony, such as the 52rd motif:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">show_motif</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motifs[[52]]</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p><img src="pics/52.png" alt=""></p>
+<p>This motif does not have pitch class E♭.</p>
+<p>And some candidates have ugly contours so that they do not sound very good, such as the ninth motif:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">show_motif</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motifs[[9]]</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p><img src="pics/9.png" alt=""></p>
+<p>The third and fourth pitch of this motif are the same.</p>
+<p>Let&rsquo;s create some functions to screen out ill-formed motifs.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># check if a motif fully reify the given harmony</span>
+<span style="color:#000">is_complete</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">harmony</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">all</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">harmony</span> <span style="color:#ce5c00;font-weight:bold">%in%</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span> <span style="color:#ce5c00;font-weight:bold">%%</span> <span style="color:#0000cf;font-weight:bold">12</span><span style="color:#000;font-weight:bold">))</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#8f5902;font-style:italic"># check if a motif has the same contour as the original one</span>
+<span style="color:#000">has_same_contour</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">motif_0</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">all</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">order</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">order</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif_0</span><span style="color:#000;font-weight:bold">))</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#8f5902;font-style:italic"># wrap the above two functions</span>
+<span style="color:#000">is_good</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">harmony</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">motif_0</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">is_complete</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">harmony</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span>
+        <span style="color:#000">has_same_contour</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">motif_0</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>Let&rsquo;s try this function on those 64 candidates:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">motifs</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">Filter</span><span style="color:#000;font-weight:bold">(</span>
+    <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000">is_good</span><span style="color:#000;font-weight:bold">(</span>
+        <span style="color:#000">motif</span><span style="color:#000;font-weight:bold">,</span>
+        <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">9</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">),</span>
+        <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">46</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">53</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">61</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">58</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">65</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">53</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">),</span>
+
+    <span style="color:#000">motifs</span>
+<span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motifs</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic">#&gt; [1] 18</span>
+</code></pre></div><p>We still have 18 candidates. We can write more screening functions to reduce the number. For example, for a dominant 7th harmony, the third should not be doubled. However, to simplify the problem, we will stop here, and just take the first candidate.</p>
+<h2 id="generate-progression">Generate Progression</h2>
+<p>Now let&rsquo;s put all these together. We will create a single function that takes a motif and a harmony progression as input, generates an entire accompaniment progression, and shows it:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">generate_progression</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">harmonies</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">prog</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">m0</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">motif</span>
+
+    <span style="color:#000">for </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">h</span> <span style="color:#000">in</span> <span style="color:#000">harmonies</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000">ms</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">generate_motifs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">m0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">h</span><span style="color:#000;font-weight:bold">)</span>
+        <span style="color:#000">m</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">Filter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">m</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000">is_good</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">m</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">h</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">m0</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">ms</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">[[1]]</span>
+        <span style="color:#000">m0</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">m</span>
+        <span style="color:#000">prog</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">prog</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">m</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">}</span>
+
+    <span style="color:#000">show_motif</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">unlist</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">prog</span><span style="color:#000;font-weight:bold">))</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>Let&rsquo;s try it on some harmony progression:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">motif</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">46</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">53</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">61</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">58</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">65</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">53</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">harmonies</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">list</span><span style="color:#000;font-weight:bold">(</span>
+    <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">6</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">),</span>
+    <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">9</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">),</span>
+    <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">generate_progression</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">motif</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">harmonies</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p><img src="pics/prog.png" alt=""></p>
+<audio controls>
+  <source src="audio/prog.mp3" type="audio/mpeg">
+</audio>
+<p>Not too bad!</p>
+<h2 id="discussion">Discussion</h2>
+<p>As mentioned earlier, this solution has some limitations, mainly because accompaniment motifs can have far more complex structures. For example, they can contain pedal notes as in Chopin&rsquo;s nocturne Op.9 No.1:</p>
+<p><img src="pics/pedal.png" alt=""></p>
+<p>chords as in Chopin&rsquo;s nocturne Op.9 No.2:</p>
+<p><img src="pics/chord.png" alt=""></p>
+<p>non-harmonic notes as in Chopin&rsquo;s nocturne Op.72 No.1:</p>
+<p><img src="pics/non.png" alt=""></p>
+<p>more than one voice as in Chopin&rsquo;s nocturne Op.15 No.1:</p>
+<p><img src="pics/voice.png" alt=""></p>
+<p>However, with this being said, the idea behind this solution applies not only to accompaniment motifs, but also to melodic motifs and even bigger structures, as in Beethoven&rsquo;s first piano sonata:</p>
+<p><img src="pics/beethoven.png" alt=""></p>
+<p>See my other blog <a href="/en/three-types-of-music-analysis">Three Types of Music Analysis</a> for some discussion.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>Huron, D. (2001). Tone and voice: A derivation of the rules of voice-leading from perceptual principles. Music Perception, 19(1), 1-64.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+</main><footer>
+     
+</footer>
+</article>
+    </body>
+</html>

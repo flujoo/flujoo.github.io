@@ -15,14 +15,11 @@ Contact me at renfeimao@gmail.com.
 
 Some of my projects:
 
-- [R package "gm"](https://github.com/flujoo/gm) for generation of music scores and audio files,
-- dark ambient [music album "Night"](/en/my-music-album-night) for solo piano.
+- [R package "gm"](https://github.com/flujoo/gm) for generation of music scores and audio files
+- dark ambient [music album "Night"](/en/my-music-album-night) for solo piano
+- [other music](/en/my-early-music)
 
 
 ## Donation
 
 If you find my site helpful, consider buy me a coffee on <https://ko-fi.com/flujoo>.
-
-Or through Alipay (支付宝):
-
-<img src="alipay.jpeg" alt="alipay" width="150">

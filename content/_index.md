@@ -4,7 +4,7 @@ title: flujoo
 
 ## About
 
-I compose music, write code, design science-based courses for kids, and am good at self-learning.
+I compose music, write code, and am good at self-learning.
 
 [My blog](/en) ([中文](/cn)) is about these topics. Get [RSS](/index.xml).
 
@@ -15,8 +15,9 @@ Contact me at renfeimao@gmail.com.
 
 Some of my projects:
 
-- [R package "gm"](https://github.com/flujoo/gm) for generation of music scores and audio files
-- dark ambient [music album "Night"](/en/my-music-album-night) for solo piano
+- [R package "gm"](https://github.com/flujoo/gm) for music score and audio generation
+- [Python package "ch0p1n"](https://github.com/flujoo/ch0p1n) for automatic composition
+- [music album "Night"](/en/my-music-album-night)
 - [other music](/en/my-early-music)
 
 

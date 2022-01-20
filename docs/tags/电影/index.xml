@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>电影 on flujoo</title>
+    <link>https://flujoo.github.io/tags/%E7%94%B5%E5%BD%B1/</link>
+    <description>Recent content in 电影 on flujoo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 11 Feb 2012 00:00:00 +0000</lastBuildDate><atom:link href="https://flujoo.github.io/tags/%E7%94%B5%E5%BD%B1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>电影情节的结构</title>
+      <link>https://flujoo.github.io/cn/structure-of-plot/</link>
+      <pubDate>Sat, 11 Feb 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://flujoo.github.io/cn/structure-of-plot/</guid>
+      <description>&amp;ldquo;电影情节&amp;rdquo; 有时是对一部电影的内容不加区别的统称, 有时是对一种可能出现的结构的指称. &amp;ldquo;这部电影的情节很淡&amp;rdquo; 偏向前一种情况, &amp;ldquo;这部电影没什么情节&amp;rdquo; 则偏向后一种. 本文探讨后一种情况.
+电影情节的结构 当你想向他人介绍一部电影时, 可能会使用语言, 并进行一些概括. 假设你是这么向别人介绍某部电影的: &amp;ldquo;他激怒了她, 她一怒之下对他开了枪, 把他杀了&amp;rdquo;. 这是你对电影中发生的 &amp;ldquo;事情&amp;rdquo; 的描述和概括. 从语言上来讲, 你说的这段话可以分成三个部分:
+ &amp;ldquo;他激怒了她&amp;rdquo; &amp;ldquo;她一怒之下对他开了枪&amp;rdquo; &amp;ldquo;把他杀了&amp;rdquo;  这三个陈述分别对应电影中发生的三件事:
+ 他激怒她 她对他开枪 他死了  这三件事通过 因果关系 相联系: 因为他激怒她, 所以她开枪; 因为她开枪, 所以他死了. 如果去掉因果关系, 这三件事就相互独立, 但各自依然具有意义, 虽然此时 &amp;ldquo;他&amp;rdquo; 和 &amp;ldquo;她&amp;rdquo; 不再必然指向相同的对象.
+考虑到语言的概括性, &amp;ldquo;他激怒了她&amp;rdquo; 这句话可能对应了更多的事情, 比如:
+ 他骂她 他给了她一巴掌 他继续骂她 &amp;hellip;  &amp;ldquo;激怒&amp;rdquo; 不对应可以直接观察到的行为, 而 &amp;ldquo;骂&amp;rdquo; 和 &amp;ldquo;打&amp;rdquo; 则可以. 本文称这样的事情为 事件.
+事件可以通过因果关系相联系构成更大的结构, 但因果关系并不是唯一可能的关系. 比如 &amp;ldquo;他看了看书, 喝了喝咖啡, 玩了玩电脑&amp;rdquo; 中, 对应的三个事件并没有明显的因果关系.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -8,7 +8,7 @@ comment: true
 cn: true
 ---
 
-阿诺德·勋伯格（Arnold Schoenberg），可以说是现代音乐的开山鼻祖，一位历史级、世界级的作曲家。但你可知道他是自学成牛的？本文将谈谈他的这部分经历。
+阿诺德·勋伯格（Arnold Schoenberg），可以说是现代音乐的开山鼻祖，一位历史级、世界级的作曲家。但你可知道他基本是靠自学的？本文将谈谈他的这部分经历。
 
 <img src="pics/schoenberg.jpg" alt="schoenberg" width="400">
 

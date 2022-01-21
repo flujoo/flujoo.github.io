@@ -50,7 +50,7 @@ cn: true
 
 认知训练有很多形式，比如下面这个游戏：
 
-![](pics/cognitive_training.png)
+<img src="pics/cognitive_training.png" alt="" width="150">
 
 上方符号通过隧道之后会丢失一个，需要你选出丢失的是哪一个。随着难度的增加，符号总数会增加。很明显，这个游戏会用到你的工作记忆。
 
@@ -108,7 +108,7 @@ da lao hu chi xiao mi mi
 
 实验人员给一些学生看了一篇科普文。之后其中一半的人会再看一遍，而另一半的人需要回答一些关于这篇文章的小问题，相当于是小考试。一周之后，实验人员又叫来这些学生，让他们回答一些和上周读过的这篇文章有关的问题。有的问题的答案可以直接从文章中找到，而有的问题没有直接的答案，需要这些学生应用文章里的知识点（比如文章中提到了翅膀的知识，而问题是关于如何制造一种飞行器）。实验结果如下：
 
-![](pics/testing_vs_rereading.png)
+<img src="pics/testing_vs_rereading.png" alt="" width="400">
 
 深色柱子表示使用考试方法的学生，浅色的柱子表示学了两遍的学生。柱子越高表示正确率越高。可以发现，深色的柱子更高，也就是读了一遍文章然后考了考自己的学生在一周后回答问题的正确率更高。而且心理学家做了不止一次实验，出的题目也不止一种类型，但是每次都是采用考试方法的学生回答的正确率高。
 
@@ -116,7 +116,7 @@ da lao hu chi xiao mi mi
 
 考试只是这类方法中的一种。**这类方法的核心是增大你学习过程中加工的深度**。比如再看一遍文章其实非常被动，你主观上也感觉更轻松，但是考自己需要你努力去回忆学过的东西，这个过程需要你更深入地加工信息，主观感受也更累。这是这类学习方法有效的原因，也是你讨厌这类方法的原因。
 
-我[另一篇文章](/cn/desirable-difficulties/)探讨了这类学习方法，有更深入的讨论。
+我[另一篇文章](/cn/desirable-difficulties/)更深入地探讨了这类学习方法。
 
 
 [^1]: Katz, B., Shah, P., & Meyer, D. E. (2018). How to play 20 questions with nature and lose: Reflections on 100 years of brain-training research. Proceedings of the National Academy of Sciences, 115(40), 9897–9904. http://doi.org/10.1073/pnas.1617102114

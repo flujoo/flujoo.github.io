@@ -1,6 +1,6 @@
 ---
 title: My Approach to Automatic Musical Composition
-date: "2022-01-22"
+date: "2022-01-23"
 tags:
     - music
 comment: true
@@ -19,7 +19,7 @@ As a trivial example, imagine that you put a cat on a piano to randomly press ke
 
 Automatic composition has many different approaches or paradigms. You may want to read the book [Algorithmic Composition: Paradigms of Automated Music Generation](https://www.amazon.com/Algorithmic-Composition-Paradigms-Automated-Generation/dp/3211999159/) for a big picture.
 
-The approach I take is inspired by theories about **how music can develop or be generated from limited materials under some common operations**, especially the theories of Arnold Schoenberg and Heinrich Schenker. I will explain this key idea in the following two sections.
+The approach I take is inspired by the theories of Arnold Schoenberg and Heinrich Schenker. The key idea is that **music can develop or be generated from limited materials under some common operations**. I will explain this in the following two sections.
 
 
 ## Music Can be Generated from Limited Materials

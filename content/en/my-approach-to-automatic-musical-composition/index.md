@@ -42,7 +42,7 @@ The same situation happens in other parts too. As indicated below, the four fram
 
 ![](assets/beethoven_sonata_repeat_2.png)
 
-Does this kind of reuse exist only in Beethoven's music? No, this probably happens in every musical work. No matter how long a musical work lasts or how varied it can sound, the amount of its core materials is always small.
+Does this kind of reuse exist only in Beethoven's music? No, this probably happens in every musical work. **No matter how long a musical work lasts or how varied it can sound, the amount of its core materials is always small.**
 
 For another example, the following is an excerpt from Mozart's K. 485:
 

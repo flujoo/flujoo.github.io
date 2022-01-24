@@ -111,7 +111,18 @@ The Chopin's nocturne is a more interesting example:
 
 The fragment in the red frame can be modified to generate the structure in the orange frame; the fragment in the blue frame can be modified to generate the structures in the green frames. The two fragments are taken from the structure in the purple frame.
 
-There are more operations can be applied to musical materials, but I will stop here. The four operations I have introduced so far are enough for the purpose of this blog.
+There are more operations can be applied to musical materials, but I will stop here. The four operations I have introduced are enough for the purpose of this blog.
+
+
+## Combine Materials According to Musical Forms
+
+Created and generated structures can be combined into larger structures, according to musical forms. A **musical form** is a way in which musical materials should be organized.
+
+For example, the beginning of the Beethoven's sonata has the form called **sentence**. Below is how this sentence is analyzed in William Caplin's system:[^2]
+
+![](assets/beethoven_sonata_caplin.png)
+
+I will not go deep into the subject of musical forms here. I highly recommend William Caplin's excellent textbook[^2] on this topic.
 
 
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.

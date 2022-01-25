@@ -50,6 +50,14 @@ pre {
     font-size: $size-meta;
 }
 
+p > code {
+    background-color: #f8f8f8;
+    font-size: $size-meta;
+    letter-spacing: -0.5px;
+    padding: 0px 5px;
+    border-radius: 2px;
+}
+
 article {
     width: 700px;
     margin: auto;

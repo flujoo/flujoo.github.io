@@ -122,7 +122,9 @@ For example, the beginning of the Beethoven's sonata has the form **sentence**. 
 
 ![](assets/beethoven_sonata_caplin.png)
 
-I will not go deep into the subject of musical forms here. I highly recommend William Caplin's excellent textbook[^2] on this topic.
+The beginning of the Chopin's nocturne is from a larger structure of the form **compound period**, which is far more complex than sentence.
+
+I will not go deep into the subject of musical forms here. I highly recommend William Caplin's excellent textbook[^2] on this topic. My key point is that musical materials should be combined according to musical forms to generate meaningful music.
 
 
 ## Summary of the Theoretical Foundation

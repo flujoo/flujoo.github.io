@@ -127,6 +127,14 @@ I will not go deep into the subject of musical forms here. I highly recommend Wi
 
 ## Summary of the Theoretical Foundation
 
+There are three key concepts in the theory of my approach:
+
+1. **limited core materials**, from which more materials can be generated,
+2. **common operations**, which can be applied to materials to generate more, and
+3. **musical forms**, according to which materials should be combined.
+
+Now it is time to turn the theory into an algorithm.
+
 
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.
 

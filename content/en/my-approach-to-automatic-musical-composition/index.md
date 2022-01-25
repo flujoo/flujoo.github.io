@@ -8,7 +8,7 @@ cn: false
 ---
 
 
-In this blog, I will introduce my approach to automatic musical composition, including the theory, the algorithm, and a Python package implementation ["ch0p1n"](https://github.com/flujoo/ch0p1n).
+In this blog, I will introduce my approach to automatic musical composition, including the theory, the algorithm, and a Python package implementation [ch0p1n](https://github.com/flujoo/ch0p1n).
 
 
 ## What Is Automatic Composition?
@@ -129,13 +129,45 @@ I will not go deep into the subject of musical forms here. I highly recommend Wi
 
 ## Summary of the Theoretical Foundation
 
-There are three key concepts in the theory of my approach:
+There are three key concepts in the theory behind my approach:
 
 1. **limited core materials**, from which more materials can be generated,
 2. **common operations**, which can be applied to materials to generate more, and
 3. **musical forms**, according to which materials should be combined.
 
 Now it is time to turn the theory into an algorithm.
+
+
+## Represent Musical Structures
+
+We first need to strictly define musical *materials* and *structures*, which we have been talking about quite vaguely.
+
+Let's return to the Beethoven's sonata. Below is its first two bars:
+
+![](assets/beethoven_sonata_basic_idea.png)
+
+This piece of music has two voices or musical lines. Each musical line consists of notes, rests or chords which consist of notes too. A note has several attributes, among which only pitch and duration will be considered here. Rather than represent notes as single objects, we will handle their pitch and durational contents separately.
+
+**Pitches** can be represented by MIDI note numbers or scientific pitch notations.[^6] Mostly, the former are used, for its ease of operation. For example, pitch C4 is represented by MIDI note number 60.
+
+The pitch of **rests** can be represented by `None` in Python.
+
+The pitch contents of a **chord** can be represented by list in Python. For example, in Python we can use `[60, 56, 53]` to represent the chord in the red frame:
+
+![](assets/beethoven_sonata_chord.png)
+
+**Durations** can be represented by numbers. For example, quarter note's duration is 1.
+
+The pitch contents of a musical line can be represented by what I call **pitch line**. In Python, a pitch line is a list whose members are `None`, numbers or lists of numbers. With Python package [typing](https://docs.python.org/3/library/typing.html), pitch line can be defined as
+
+```python
+from typing import List, Union
+
+Pitch = int
+PitchLine = List[Union[None, Pitch, List[Pitch]]]
+```
+
+The durational contents of a musical line can be represented by **duration line**. In Python, a duration line is a list whose members are numbers.
 
 
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.
@@ -147,3 +179,5 @@ Now it is time to turn the theory into an algorithm.
 [^4]: Huron, D. (2001). Tone and voice: A derivation of the rules of voice-leading from perceptual principles. Music Perception, 19(1), 1-64.
 
 [^5]: Pankhurst, T. (2008). SchenkerGUIDE: a brief handbook and website for Schenkerian analysis (p. 11). Routledge.
+
+[^6]: <https://en.wikipedia.org/wiki/Scientific_pitch_notation#Table_of_note_frequencies>

@@ -148,11 +148,11 @@ Let's return to the Beethoven's sonata. Below is its first two bars:
 
 This piece of music has two voices or musical lines. Each musical line consists of notes, rests or chords which consist of notes too. A note has several attributes, among which only pitch and duration will be considered here. Rather than represent notes as single objects, we will handle their pitch and durational contents separately.
 
-**Pitches** can be represented by MIDI note numbers or scientific pitch notations.[^6] Mostly, the former are used, for its ease of operation. For example, pitch C4 is represented by MIDI note number 60.
+**Pitches** can be represented by MIDI note numbers or scientific pitch notations.[^6] Mostly, the former are used, for ease of operation. For example, pitch C4 is represented by MIDI note number 60.
 
 The pitch of **rests** can be represented by `None` in Python.
 
-The pitch contents of a **chord** can be represented by list in Python. For example, in Python we can use `[60, 56, 53]` to represent the chord in the red frame:
+The pitch contents of a **chord** can be represented by list in Python. For example, in Python we can use `[60, 56, 53]` to represent the pitch contents of the chord in the red frame:
 
 ![](assets/beethoven_sonata_chord.png)
 

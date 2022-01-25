@@ -1,6 +1,6 @@
 ---
 title: My Approach to Automatic Musical Composition
-date: "2022-01-24"
+date: "2022-01-25"
 tags:
     - music
 comment: true
@@ -17,7 +17,7 @@ Automatic composition is using algorithms to generate music.
 
 As a trivial example, imagine that you put a cat on a piano to randomly press keys to generate music. The music is thus the result of a predetermined algorithm rather than of your instantaneous emotions or compositional skills. This is why it is called *automatic* composition.
 
-Automatic composition has many different approaches or paradigms.[^1] The approach I take is inspired by the theories of Arnold Schoenberg, Heinrich Schenker and William Caplin. The key idea is that **music can develop or be generated from limited materials under some common operations**. I will explain this idea in the following three sections.
+Automatic composition has many different approaches or paradigms.[^1] The approach I take is inspired by the theories of Arnold Schoenberg, Heinrich Schenker and William Caplin. The key idea is that **music can develop or be generated from limited materials under some common operations**. I will explain the theoretical foundation of my approach in the following three sections.
 
 
 ## Generate Music from Limited Materials
@@ -118,11 +118,14 @@ There are more operations can be applied to musical materials, but I will stop h
 
 Created and generated structures can be combined into larger structures, according to musical forms. A **musical form** is a way in which musical materials should be organized.
 
-For example, the beginning of the Beethoven's sonata has the form called **sentence**. Below is how this sentence is analyzed in William Caplin's system:[^2]
+For example, the beginning of the Beethoven's sonata has the form **sentence**. Below is how this sentence is analyzed in William Caplin's system:[^2]
 
 ![](assets/beethoven_sonata_caplin.png)
 
 I will not go deep into the subject of musical forms here. I highly recommend William Caplin's excellent textbook[^2] on this topic.
+
+
+## Summary of the Theoretical Foundation
 
 
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.

@@ -169,12 +169,14 @@ PitchLine = List[Union[None, Pitch, List[Pitch]]]
 
 The durational contents of a musical line can be represented by **duration line**. In Python, a duration line is a list whose members are numbers.
 
+Finally, **harmonies** and **scales** can be represented by lists of [pitch classes](https://en.wikipedia.org/wiki/Pitch_class#Other_ways_to_label_pitch_classes). For example, in Python C major harmony can be represented by `[0, 4, 7]`.
+
 
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.
 
 [^2]: Caplin, William E. (2013). Analyzing Classical Form: an Approach for the Classroom. Oxford and New York: Oxford University Press.
 
-[^3]: Please note that this definition is narrower than Arnold Schoenberg's and William Caplin's.
+[^3]: This definition of repetition is narrower than Arnold Schoenberg's and William Caplin's.
 
 [^4]: Huron, D. (2001). Tone and voice: A derivation of the rules of voice-leading from perceptual principles. Music Perception, 19(1), 1-64.
 

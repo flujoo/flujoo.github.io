@@ -148,9 +148,9 @@ Let's return to the Beethoven's sonata. Below is its first two bars:
 
 This piece of music has two voices or musical lines. Each musical line consists of notes, rests or chords which consist of notes too. A note has several attributes, among which only pitch and duration will be considered here. Rather than represent notes as single objects, we will handle their pitch and durational contents separately.
 
-**Pitches** can be represented by MIDI note numbers or scientific pitch notations.[^6] Mostly, the former are used, for ease of operation. For example, pitch C4 is represented by MIDI note number 60.
+**Pitches** can be represented by [scientific pitch notations](https://en.wikipedia.org/wiki/Scientific_pitch_notation) or [MIDI note numbers](https://en.wikipedia.org/wiki/Scientific_pitch_notation#Table_of_note_frequencies). Mostly, the latter are used, for ease of operation. For example, pitch C4 is represented by MIDI note number 60.
 
-The pitch of **rests** can be represented by `None` in Python.
+The pitch content of a **rest** can be represented by `None` in Python.
 
 The pitch contents of a **chord** can be represented by list in Python. For example, in Python we can use `[60, 56, 53]` to represent the pitch contents of the chord in the red frame:
 
@@ -158,7 +158,7 @@ The pitch contents of a **chord** can be represented by list in Python. For exam
 
 **Durations** can be represented by numbers. For example, quarter note's duration is 1.
 
-The pitch contents of a musical line can be represented by what I call **pitch line**. In Python, a pitch line is a list whose members are `None`, numbers or lists of numbers. With Python package [typing](https://docs.python.org/3/library/typing.html), pitch line can be defined as
+The pitch contents of a **musical line** can be represented by what I call **pitch line**. In Python, a pitch line is a list whose members are `None`, numbers or lists of numbers. With Python package [typing](https://docs.python.org/3/library/typing.html), pitch line can be defined as
 
 ```python
 from typing import List, Union
@@ -172,6 +172,9 @@ The durational contents of a musical line can be represented by **duration line*
 Finally, **harmonies** and **scales** can be represented by lists of [pitch classes](https://en.wikipedia.org/wiki/Pitch_class#Other_ways_to_label_pitch_classes). For example, in Python C major harmony can be represented by `[0, 4, 7]`.
 
 
+## Repetition
+
+
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.
 
 [^2]: Caplin, William E. (2013). Analyzing Classical Form: an Approach for the Classroom. Oxford and New York: Oxford University Press.
@@ -181,5 +184,3 @@ Finally, **harmonies** and **scales** can be represented by lists of [pitch clas
 [^4]: Huron, D. (2001). Tone and voice: A derivation of the rules of voice-leading from perceptual principles. Music Perception, 19(1), 1-64.
 
 [^5]: Pankhurst, T. (2008). SchenkerGUIDE: a brief handbook and website for Schenkerian analysis (p. 11). Routledge.
-
-[^6]: <https://en.wikipedia.org/wiki/Scientific_pitch_notation#Table_of_note_frequencies>

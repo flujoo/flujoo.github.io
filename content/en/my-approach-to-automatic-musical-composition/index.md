@@ -158,7 +158,7 @@ The pitch contents of a **chord** can be represented by list in Python. For exam
 
 **Durations** can be represented by numbers. For example, quarter note's duration is 1.
 
-The pitch contents of a musical line can be represented by what I call **pitch line**. In Python, a pitch line is a list whose members are `None`, numbers or lists of numbers. With Python package [typing](https://docs.python.org/3/library/typing.html), pitch line can be defined as
+The pitch contents of a **musical line** can be represented by what I call **pitch line**. In Python, a pitch line is a list whose members are `None`, numbers or lists of numbers. With Python package [typing](https://docs.python.org/3/library/typing.html), pitch line can be defined as
 
 ```python
 from typing import List, Union
@@ -172,7 +172,21 @@ The durational contents of a musical line can be represented by **duration line*
 Finally, **harmonies** and **scales** can be represented by lists of [pitch classes](https://en.wikipedia.org/wiki/Pitch_class#Other_ways_to_label_pitch_classes). For example, in Python C major harmony can be represented by `['C', 'E', 'G']` or `[0, 4, 7]`.
 
 
-## Repetition
+## Motifs
+
+You may have heard this term a lot. A **motif** is structurally a musical line, usually short in length. Motifs are the building blocks of music. They can be repeated, elaborated, fragmented and combined to generate music.
+
+For example, the following is how Schoenberg analysed the beginning of the Beethoven's sonata:[^6]
+
+![](assets/beethoven_sonata_schoenberg.png)
+
+In his analysis, the melody part of this piece can be generated from only three motifs.
+
+There are different kinds of motifs. For example, the framed structures below are all motifs:
+
+![](assets/chopin_op9_no1_motifs.png)
+
+The motifs in the red frames can be called **accompaniment motifs** as they appear in the accompaniment line of this nocturne. They can also be called **harmonic motifs** as they consist of only harmonic notes. The motifs in the blue frames can be called **melodic motifs** as they appear in the melody line.
 
 
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.
@@ -184,3 +198,5 @@ Finally, **harmonies** and **scales** can be represented by lists of [pitch clas
 [^4]: Huron, D. (2001). Tone and voice: A derivation of the rules of voice-leading from perceptual principles. Music Perception, 19(1), 1-64.
 
 [^5]: Pankhurst, T. (2008). SchenkerGUIDE: a brief handbook and website for Schenkerian analysis (p. 11). Routledge.
+
+[^6]: Schoenberg, A., Stein, L., & Strang, G. (1967). Fundamentals of musical composition (p. 63). London: Faber & Faber.

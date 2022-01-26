@@ -158,7 +158,7 @@ The pitch contents of a **chord** can be represented by list in Python. For exam
 
 **Durations** can be represented by numbers. For example, quarter note's duration is 1.
 
-The pitch contents of a **musical line** can be represented by what I call **pitch line**. In Python, a pitch line is a list whose members are `None`, numbers or lists of numbers. With Python package [typing](https://docs.python.org/3/library/typing.html), pitch line can be defined as
+The pitch contents of a musical line can be represented by what I call **pitch line**. In Python, a pitch line is a list whose members are `None`, numbers or lists of numbers. With Python package [typing](https://docs.python.org/3/library/typing.html), pitch line can be defined as
 
 ```python
 from typing import List, Union

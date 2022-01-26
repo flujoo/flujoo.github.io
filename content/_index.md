@@ -15,9 +15,9 @@ Contact me at renfeimao@gmail.com.
 
 Some of my projects:
 
-- [R package "gm"](https://github.com/flujoo/gm) for music score and audio generation
-- [Python package "ch0p1n"](https://github.com/flujoo/ch0p1n) for automatic composition
-- [music album "Night"](/en/my-music-album-night)
+- R package [gm](https://github.com/flujoo/gm) for music score and audio generation
+- Python package [ch0p1n](https://github.com/flujoo/ch0p1n) for automatic composition
+- music album [Night](/en/my-music-album-night)
 - [other music](/en/my-early-music)
 
 

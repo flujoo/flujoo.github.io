@@ -182,7 +182,7 @@ For example, the following is how Schoenberg analysed the beginning of the Beeth
 
 In his analysis, the melody part of this piece can be generated from only three motifs.
 
-There are different kinds of motifs. For example, the framed structures below are all motifs:
+There are different kinds of motifs. For example, two kinds of motifs are framed in the following score:
 
 ![](assets/chopin_op9_no1_motifs.png)
 

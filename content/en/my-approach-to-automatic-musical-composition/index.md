@@ -152,7 +152,7 @@ This piece of music has two voices or musical lines. Each musical line consists 
 
 The pitch content of a **rest** can be represented by `None` in Python.
 
-The pitch contents of a **chord** can be represented by list in Python. For example, in Python we can use `[60, 56, 53]` to represent the pitch contents of the chord in the red frame:
+The pitch contents of a **chord** can be represented by list in Python. For example, in Python we can use `['C4', 'A-3', 'F3']` or `[60, 56, 53]` to represent the pitch contents of the chord in the red frame:
 
 ![](assets/beethoven_sonata_chord.png)
 
@@ -169,7 +169,7 @@ PitchLine = List[Union[None, Pitch, List[Pitch]]]
 
 The durational contents of a musical line can be represented by **duration line**. In Python, a duration line is a list whose members are numbers.
 
-Finally, **harmonies** and **scales** can be represented by lists of [pitch classes](https://en.wikipedia.org/wiki/Pitch_class#Other_ways_to_label_pitch_classes). For example, in Python C major harmony can be represented by `[0, 4, 7]`.
+Finally, **harmonies** and **scales** can be represented by lists of [pitch classes](https://en.wikipedia.org/wiki/Pitch_class#Other_ways_to_label_pitch_classes). For example, in Python C major harmony can be represented by `['C', 'E', 'G']` or `[0, 4, 7]`.
 
 
 ## Repetition

@@ -217,6 +217,8 @@ The background harmonies behind these two motifs are B♭m and F7. When the firs
 
 For example, the second pitch of the first motif is F3 and that of the second motif is also F3. Since the harmony behind the second motif is F dominant 7th whose pitch classes include F, there is no need for F3 to change. Meanwhile, the third pitch of the first motif is D♭4, but there is no D♭ in the pitch classes of F dominant 7th, so it moves to a nearest pitch E♭4.
 
+![](assets/chopin_op9_no1_accompaniment_2_3.png)
+
 This is pretty much it. **To repeat a harmonic motif in a harmony, just move every pitch to its nearest neighbor in the harmony.**
 
 Please note that there may be more than one neighbor for a pitch. For example, in the Chopin's nocturne, the third pitch of the first motif is D♭4, its neighbors are C4 and E♭4. Therefore, to repeat a motif, we can generate many candidate motifs in the new harmony, then select the best one from them. For example, some candidates may not have the same morphology as the original motif; some may not fully reify the background harmony. See my blog [Generate Accompaniment Progression](/en/generate-accompaniment-progression/) for more details.

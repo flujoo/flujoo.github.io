@@ -213,7 +213,7 @@ Let's have a look at the first two accompaniment motifs from the nocturne:
   <source src="assets/chopin_op9_no1_accompaniment_2.mp3" type="audio/mpeg">
 </audio>
 
-The background harmonies behind these two motifs are B♭m and F7. Except for the first note which is a [pedal note](https://en.wikipedia.org/wiki/Pedal_point), when the first motif is repeated in harmony F7, all pitches move to their nearest pitches in the new harmony.
+The background harmonies behind these two motifs are B♭m and F7. When the first motif is repeated in harmony F7, all pitches move to their nearest pitches in the new harmony, except for the first note which is a [pedal note](https://en.wikipedia.org/wiki/Pedal_point).
 
 For example, the second pitch of the first motif is F3 and that of the second motif is also F3. Since the harmony behind the second motif is F dominant 7th whose pitch classes include F, there is no need for F3 to change. Meanwhile, the third pitch of the first motif is D♭4, but there is no D♭ in the pitch classes of F dominant 7th, so it moves to a nearest pitch E♭4.
 

@@ -1,6 +1,6 @@
 ---
 title: My Approach to Automatic Musical Composition
-date: "2022-01-25"
+date: "2022-01-27"
 tags:
     - music
 comment: true
@@ -187,6 +187,21 @@ There are different kinds of motifs. For example, two kinds of motifs are framed
 ![](assets/chopin_op9_no1_motifs.png)
 
 The motifs in the red frames can be called **accompaniment motifs** as they appear in the accompaniment line of this nocturne. They can also be called **harmonic motifs** as they consist of only harmonic notes. The motifs in the blue frames can be called **melodic motifs** as they appear in the melody line.
+
+
+## Repeat Motifs
+
+Repetition is an important and frequently used operation. For example, as in the Chopin's nocturne, a long accompaniment line (indicated by frames) can be generated from only one starting accompaniment motif under the operation repetition (indicated by arrows):
+
+![](assets/chopin_op9_no1_accompaniment_repetition.png)
+
+The basic idea behind the generation is:
+
+- Repeat a motif in a harmony to generate a new motif.
+- Repeat this new motif in the next harmony to generate another motif.
+- Repeat this process until a whole accompaniment line is generated.
+
+Then the core question is how to repeat a motif in a harmony.
 
 
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.

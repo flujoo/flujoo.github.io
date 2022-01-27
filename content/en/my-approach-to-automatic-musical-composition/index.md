@@ -189,19 +189,46 @@ There are different kinds of motifs. For example, two kinds of motifs are framed
 The motifs in the red frames can be called **accompaniment motifs** as they appear in the accompaniment line of this nocturne. They can also be called **harmonic motifs** as they consist of only harmonic notes. The motifs in the blue frames can be called **melodic motifs** as they appear in the melody line.
 
 
-## Repeat Motifs
+## Repeat Harmonic Motifs
 
-Repetition is an important and frequently used operation. For example, as in the Chopin's nocturne, a long accompaniment line (indicated by frames) can be generated from only one starting accompaniment motif under the operation repetition (indicated by arrows):
+Repetition is an important and frequently used operation. We will first consider how to repeat harmonic motifs.
+
+In the Chopin's nocturne, a long accompaniment line (indicated by frames) can be generated from only one starting accompaniment motif under the operation repetition (indicated by arrows):
 
 ![](assets/chopin_op9_no1_accompaniment_repetition.png)
 
-The basic idea behind the generation is:
+The basic idea behind this generation is:
 
 - Repeat a motif in a harmony to generate a new motif.
 - Repeat this new motif in the next harmony to generate another motif.
 - Repeat this process until a whole accompaniment line is generated.
 
 Then the core question is how to repeat a motif in a harmony.
+
+Let's have a look at the first two accompaniment motifs from the nocturne:
+
+![](assets/chopin_op9_no1_accompaniment_2_2.png)
+
+<audio controls>
+  <source src="assets/chopin_op9_no1_accompaniment_2.mp3" type="audio/mpeg">
+</audio>
+
+The background harmonies behind these two motifs are B♭m and F7. Except for the first note which is a [pedal note](https://en.wikipedia.org/wiki/Pedal_point), when the first motif is repeated in harmony F7, all pitches move to their nearest pitches in the new harmony.
+
+For example, the second pitch of the first motif is F3 and that of the second motif is also F3. Since the harmony behind the second motif is F dominant 7th whose pitch classes include F, there is no need for F3 to change. Meanwhile, the third pitch of the first motif is D♭4, but there is no D♭ in the pitch classes of F dominant 7th, so it moves to a nearest pitch E♭4.
+
+This is pretty much it. **To repeat a harmonic motif in a harmony, just move every pitch to its nearest neighbor in the harmony.**
+
+Please note that there may be more than one neighbor for a pitch. For example, in the Chopin's nocturne, the third pitch of the first motif is D♭4, its neighbors are C4 and E♭4. Therefore, to repeat a motif, we can generate many candidate motifs in the new harmony, then select the best one from them. For example, some candidates may not have the same morphology as the original motif; some may not fully reify the background harmony. See my blog [Generate Accompaniment Progression](/en/generate-accompaniment-progression/) for more details.
+
+
+## Implementation of Repetition
+
+The function `lead()` from my Python package [ch0p1n](https://github.com/flujoo/ch0p1n) is for repeating harmonic motifs.
+
+```python
+from ch0p1n.motif import lead
+```
 
 
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.

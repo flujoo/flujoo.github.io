@@ -221,7 +221,7 @@ For example, the second pitch of the first motif is F3 and that of the second mo
 
 This is pretty much it. **To repeat a harmonic motif in a harmony, just move every pitch to its nearest neighbor in the harmony.**
 
-Please note that there may be more than one neighbor for a pitch. For example, in the Chopin's nocturne, the third pitch of the first motif is D♭4, and both C4 and E♭4 are its neighbors. Therefore, under repetition, more than one motif may be generated in the new harmony. However, usually not all of them are equally good, so we need some mechanisms to screen out the bad ones. For example, some motifs may not have the same morphology as the original motif; some may not fully reify the background harmony. See my blog [Generate Accompaniment Progression](/en/generate-accompaniment-progression/) for more details.
+Please note that there may be more than one neighbor for a pitch. For example, in the Chopin's nocturne, the third pitch of the first motif is D♭4, and both C4 and E♭4 are its neighbors. Therefore, under repetition, more than one motif may be generated in the new harmony. However, usually not all of the generated motifs are equally good, so we need some mechanisms to screen out the bad ones. For example, some motifs may not have the same morphology as the original motif; some may not fully reify the background harmony. See my blog [Generate Accompaniment Progression](/en/generate-accompaniment-progression/) for more details.
 
 
 ## Implementation of Repetition

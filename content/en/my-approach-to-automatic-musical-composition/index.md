@@ -63,7 +63,7 @@ Please note that, in stating that a structure can be generated from other struct
 
 Once a structure is created, some common operations can be applied to them to generate new structures. I will talk about some operations below.
 
-The first operation I will talk about is **repetition**. It means repeating a structure in a new harmony without changing its morphology.[^3]
+The first operation I will talk about is **repetition**. It means repeating a structure in a new harmony without changing its morphology.
 
 The Beethoven's sonata is an example of repetition:
 
@@ -75,7 +75,7 @@ The Chopin's nocturne is another example. The accompaniment motif in the blue fr
 
 ![](assets/chopin_op9_no1_accompaniment.png)
 
-In the repetition, some pitches move to their nearest pitches to fit the new harmony, according to some voice-leading rules.[^4] Some of these changes are indicated below:
+In the repetition, some pitches move to their nearest pitches to fit the new harmony, according to some [voice-leading](https://en.wikipedia.org/wiki/Voice_leading) rules.[^3] Some of these changes are indicated below:
 
 ![](assets/chopin_op9_no1_accompaniment_2.png)
 
@@ -87,7 +87,7 @@ The next operation is **elaboration**. It means adding passing notes, neighbor n
 
 ![](assets/chopin_op9_no1_repeat.png)
 
-Sometimes, elaborations are rather inferred from than showed in scores. Heinrich Schenker's theory differentiates music's superficial structure from its deep structure(s), and the superficial structure is the outcome of elaboration of a deep structure, as showed in the following example:[^5]
+Sometimes, elaborations are rather inferred from than showed in scores. Heinrich Schenker's theory differentiates music's superficial structure from its deep structure(s), and the superficial structure is the outcome of elaboration of a deep structure, as showed in the following example:[^4]
 
 ![](assets/elaboration.png)
 
@@ -176,7 +176,7 @@ Finally, **harmonies** and **scales** can be represented by lists of [pitch clas
 
 You may have heard this term a lot. A **motif** is structurally a musical line, usually short in length. Motifs are the building blocks of music. They can be repeated, elaborated, fragmented and combined to generate music.
 
-For example, the following is how Schoenberg analysed the beginning of the Beethoven's sonata:[^6]
+For example, the following is how Schoenberg analysed the beginning of the Beethoven's sonata:[^5]
 
 ![](assets/beethoven_sonata_schoenberg.png)
 
@@ -226,7 +226,7 @@ Please note that there may be more than one neighbor for a pitch. For example, i
 
 ## Implementation of Repetition
 
-The function `lead()` from my Python package [ch0p1n](https://github.com/flujoo/ch0p1n) is for repeating harmonic motifs.
+The function `lead()` from my Python package [ch0p1n](https://github.com/flujoo/ch0p1n) is for repeating harmonic motifs. The function got its name from the concept voice-leading, which means every note in a motif *leads* by step to the note(s) in a new harmony.
 
 ```python
 from ch0p1n.motif import lead
@@ -237,10 +237,8 @@ from ch0p1n.motif import lead
 
 [^2]: Caplin, William E. (2013). Analyzing Classical Form: an Approach for the Classroom. Oxford and New York: Oxford University Press.
 
-[^3]: This definition of repetition is narrower than Arnold Schoenberg's and William Caplin's.
+[^3]: Huron, D. (2001). Tone and voice: A derivation of the rules of voice-leading from perceptual principles. Music Perception, 19(1), 1-64.
 
-[^4]: Huron, D. (2001). Tone and voice: A derivation of the rules of voice-leading from perceptual principles. Music Perception, 19(1), 1-64.
+[^4]: Pankhurst, T. (2008). SchenkerGUIDE: a brief handbook and website for Schenkerian analysis (p. 11). Routledge.
 
-[^5]: Pankhurst, T. (2008). SchenkerGUIDE: a brief handbook and website for Schenkerian analysis (p. 11). Routledge.
-
-[^6]: Schoenberg, A., Stein, L., & Strang, G. (1967). Fundamentals of musical composition (p. 63). London: Faber & Faber.
+[^5]: Schoenberg, A., Stein, L., & Strang, G. (1967). Fundamentals of musical composition (p. 63). London: Faber & Faber.

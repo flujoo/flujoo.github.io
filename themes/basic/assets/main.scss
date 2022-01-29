@@ -50,12 +50,18 @@ pre {
     font-size: $size-meta;
 }
 
-p > code {
+// https://stackoverflow.com/questions/
+// 14900763/css-selector-for-not-a-child-of-element-type
+code:not(pre *) {
     background-color: #f8f8f8;
     font-size: $size-meta;
     letter-spacing: -0.5px;
     padding: 0px 5px;
     border-radius: 2px;
+}
+
+h2 code {
+    font-size: $size-h2;
 }
 
 article {

@@ -1,6 +1,6 @@
 ---
 title: My Approach to Automatic Musical Composition
-date: "2022-01-28"
+date: "2022-01-29"
 tags:
     - music
 comment: true
@@ -228,9 +228,13 @@ Please note that there may be more than one neighbor for a pitch. For example, i
 
 The function `lead()` from my Python package [ch0p1n](https://github.com/flujoo/ch0p1n) is for repeating harmonic motifs. The function got its name from the concept voice-leading, which means every note in a motif *leads* by step to the note(s) in a new harmony.
 
-```python
-from ch0p1n.motif import lead
-```
+Let's try this function on the first accompaniment motif from the Chopin's nocturne:
+
+![](assets/chopin_op9_no1_accompaniment_1.png)
+
+<audio controls>
+  <source src="assets/chopin_op9_no1_accompaniment_1.mp3" type="audio/mpeg">
+</audio>
 
 
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.

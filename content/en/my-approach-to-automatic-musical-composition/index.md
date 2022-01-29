@@ -236,6 +236,89 @@ Let's try this function on the first accompaniment motif from the Chopin's noctu
   <source src="assets/chopin_op9_no1_accompaniment_1.mp3" type="audio/mpeg">
 </audio>
 
+This motif can be represented as
+
+```python
+pitch_motif = [46, 53, 61, 58, 65, 53]
+# ['B-2', 'F3', 'D-4', 'B-3', 'F4', 'F3']
+
+duration_motif = [0.5] * 6
+```
+
+Its pitch and durational contents are represented separately.
+
+Suppose the harmony is F7, in which this motif is to be repeated. It can be represented as
+
+```python
+harmony = [5, 9, 0, 3]
+# ['F', 'A', 'C', 'E-']
+```
+
+Apply `lead()`:
+
+```python
+from ch0p1n.motif import lead
+
+pitch_motifs = lead(
+  pitch_motif = pitch_motif,
+  harmony = harmony,
+  steps = [-1, 0, 1],
+  complete = True,
+  similar = 'direction'
+)
+```
+
+`lead()` is applied only to the pitch contents of the motif. And the result is also a list of pitch contents. Before checking this result, let's have a look at the function's parameters:
+
+- `pitch_motif` is the pitch contents of a motif.
+
+- `harmony` is self-explanatory.
+
+- `steps` indicates how each pitch should move to generate new pitches in the given harmony. `steps = [-1, 0, 1]` means each pitch should stay if it fits the harmony, and move one step upward and downward to some neighbor pitches in the harmony.
+
+- `complete = True` means keep only the pitch lines that fully reify the harmony.
+
+- `similar = 'direction'` means keep only the pitch lines that have the same contour as the input pitch line.
+
+The result is quite long, even though we have specified `complete` and `similar`:
+
+```python
+>>> pitch_motifs
+
+[
+  [45, 51, 60, 57, 63, 53],
+  [45, 51, 60, 57, 65, 51],
+  [45, 51, 60, 57, 65, 53],
+  # ...
+  # 74 pitch lines in total
+]
+```
+
+We can show the first six motifs in score with `show()`, which is built on Python package [music21](https://github.com/cuthbertLab/music21):
+
+```python
+from ch0p1n.utils import show
+
+# to merge `pitch_motifs`
+from itertools import chain
+
+# show the first six motifs
+n = 6
+
+show(
+  pitch_lines = [list(chain(*pitch_motifs[:n]))],
+  duration_lines = [duration_motif * n],
+  group = 0, # the number of voices in the treble staff
+  key = -5,
+  meter = '6/4',
+  clefs = ['g', 'f']
+)
+```
+
+![](assets/lead_chopin.png)
+
+We can use `is_complete()` and `is_similar()` from [ch0p1n](https://github.com/flujoo/ch0p1n) or write more functions to further screen out unsatisfactory pitch lines, but I will stop here.
+
 
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.
 

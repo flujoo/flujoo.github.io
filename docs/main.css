@@ -27,6 +27,16 @@ pre {
   overflow: auto;
   font-size: 14px; }
 
+code:not(pre *) {
+  background-color: #f8f8f8;
+  font-size: 14px;
+  letter-spacing: -0.5px;
+  padding: 0px 5px;
+  border-radius: 2px; }
+
+h2 code {
+  font-size: 24px; }
+
 article {
   width: 700px;
   margin: auto;

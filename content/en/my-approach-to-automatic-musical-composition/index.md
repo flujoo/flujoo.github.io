@@ -1,6 +1,6 @@
 ---
 title: My Approach to Automatic Musical Composition
-date: "2022-01-29"
+date: "2022-01-31"
 tags:
     - music
 comment: true
@@ -317,7 +317,13 @@ show(
 
 ![](assets/lead_chopin.png)
 
-We can use `is_complete()` and `is_similar()` from [ch0p1n](https://github.com/flujoo/ch0p1n) or write more functions to further screen out unsatisfactory pitch lines, but I will stop here.
+We can randomly select a pitch line to use, or write functions to further screen out unsatisfactory pitch lines, but I will stop here.
+
+Before dealing with repeating melodic motifs, which is more complex, let's first consider how to elaborate and reduce motifs.
+
+
+## Implementation of Elaboration and Reduction
+
 
 
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.

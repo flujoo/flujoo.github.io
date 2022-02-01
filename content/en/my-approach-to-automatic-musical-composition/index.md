@@ -1,6 +1,6 @@
 ---
 title: My Approach to Automatic Musical Composition
-date: "2022-01-31"
+date: "2022-02-01"
 tags:
     - music
 comment: true
@@ -158,7 +158,7 @@ The pitch contents of a **chord** can be represented by list in Python. For exam
 
 **Durations** can be represented by numbers. For example, quarter note's duration is 1.
 
-The pitch contents of a **musical line** can be represented by what I call **pitch line**. In Python, a pitch line is a list whose members are `None`, numbers or lists of numbers. With Python package [typing](https://docs.python.org/3/library/typing.html), pitch line can be defined as
+The pitch contents of a **musical line** can be represented by what I call **pitch line**. In Python, a pitch line is a list whose members are `None`, numbers or lists of numbers. With Python package [typing](https://docs.python.org/3/library/typing.html), pitch line can be defined as:
 
 ```python
 from typing import List, Union
@@ -186,7 +186,118 @@ There are different kinds of motifs. For example, two kinds of motifs are framed
 
 ![](assets/chopin_op9_no1_motifs.png)
 
-The motifs in the red frames can be called **accompaniment motifs** as they appear in the accompaniment line of this nocturne. They can also be called **harmonic motifs** as they consist of only harmonic notes. The motifs in the blue frames can be called **melodic motifs** as they appear in the melody line.
+The motifs in the red frames can be called **accompaniment motifs** as they appear in the accompaniment line of this nocturne. They can also be called **harmonic motifs** as they consist of only harmonic notes. The motifs in the blue frames can be called **melodic motifs** as they appear in the melody line, or **non-harmonic motifs** if they contain non-harmonic notes.
+
+In the following several sections, I will talk about how to repeat motifs.
+
+
+## Implementation of Repetition: `transpose()`
+
+The function `transpose()` from my Python package [ch0p1n](https://github.com/flujoo/ch0p1n) is for transposing a motif along a scale.
+
+Suppose there is a motif which can be represented as:
+
+```python
+pitch_motif = [60, 67, 76, 72]
+# ['C4', 'G4', 'E5', 'C5']
+
+duration_motif = [1, 1, 1, 1]
+```
+
+Remember that we separately represent a motif's pitch and durational contents.
+
+We can show this motif in score with `show()`, which is built on Python package [music21](https://github.com/cuthbertLab/music21):
+
+```python
+from ch0p1n.utils import show
+
+show(
+  pitch_lines = [pitch_motif],
+  duration_lines = [duration_motif],
+  group = 1, # the number of voices in the treble staff
+  key = 0,
+  meter = '4/4',
+  clefs = ['g', 'f']
+)
+```
+
+![](assets/transpose_original.png)
+
+Transpose it up by one step along C major scale:
+
+```python
+from ch0p1n.motif import transpose
+
+pitch_motif_transposed = transpose(
+  pitch_motif = pitch_motif,
+  scale = [0, 2, 4, 5, 7, 9, 11],
+  step = 1
+)
+```
+
+The code is pretty self-explanatory. Let's check the score:
+
+```python
+show(
+  pitch_lines = [pitch_motif_transposed],
+  duration_lines = [duration_motif],
+  group = 1, # the number of voices in the treble staff
+  key = 0,
+  meter = '4/4',
+  clefs = ['g', 'f']
+)
+```
+
+![](assets/transpose_scale.png)
+
+It looks good. Every pitch has moved up by one step along the C major scale.
+
+Since harmony is a special kind of scale, we can use `transpose()` to repeat the motif in a harmony, say, G major harmony:
+
+```python
+pitch_motif_transposed = transpose(
+  pitch_motif = pitch_motif,
+  scale = [7, 11, 2], # G major harmony
+  step = 1
+)
+
+show(
+  # show the original and transposed motifs together
+  pitch_lines = [pitch_motif + pitch_motif_transposed],
+  duration_lines = [duration_motif * 2],
+  group = 1,
+  key = 0,
+  meter = '4/4',
+  clefs = ['g', 'f']
+)
+```
+
+![](assets/transpose_harmony.png)
+
+The original motif is in the first bar, and the transposed the second. You can see how each pitch moves up by one step to fit the G major harmony.
+
+In some cases, however, `transpose()` does not work well. Still in the above example, suppose we transpose the motif down rather than up by one step:
+
+![](assets/transpose_fail.png)
+
+The transposed motif in the second bar is not acceptable because it contains no pitch class G to reify the G major harmony.
+
+
+## Implementation of Repetition: `lead()`
+
+We can improve this situation with function `lead()` from [ch0p1n](https://github.com/flujoo/ch0p1n):
+
+```python
+from ch0p1n.motif import lead
+
+pitch_motifs = lead(
+  pitch_motif = pitch_motif,
+  harmony = [7, 11, 2], # G major harmony
+  steps = [-1, 0]
+)
+```
+
+
 
 
 ## Repeat Harmonic Motifs
@@ -319,10 +430,60 @@ show(
 
 We can randomly select a pitch line to use, or write functions to further screen out unsatisfactory pitch lines, but I will stop here.
 
-Before dealing with repeating melodic motifs, which is more complex, let's first consider how to elaborate and reduce motifs.
+Before dealing with melodic motifs, which is more complex, let's first consider how to elaborate and reduce motifs.
 
 
 ## Implementation of Elaboration and Reduction
+
+Simply speaking, elaboration is adding notes to a motif. The function `elaborate()` from [ch0p1n](https://github.com/flujoo/ch0p1n) serves the exact purpose.
+
+Suppose there is a very simple motif:
+
+```python
+pitch_motif = [80, 77, None]
+duration_motif = [2, 1, 1]
+
+show(
+  pitch_lines = [pitch_motif],
+  duration_lines = [duration_motif],
+  group = 1,
+  key = -4,
+  meter = '4/4',
+  clefs = ['g', 'f']
+)
+```
+
+![](assets/elaborate_beethoven.png)
+
+We can elaborate it as:
+
+```python
+from ch0p1n.motif import elaborate
+
+elaborated = elaborate(
+  pitch_motif = pitch_motif,
+  duration_motif = duration_motif,
+  reference = 0,
+  steps = [-1, -1, -1],
+  scale = [5, 7, 8, 10, 0, 1, 4],
+  position = 'right',
+  ratio = 1/4,
+  relative = True
+)
+
+show(
+  pitch_lines = [elaborated[0]],
+  duration_lines = [elaborated[1]],
+  group = 1,
+  key = -4,
+  meter = '4/4',
+  clefs = ['g', 'f']
+)
+```
+
+![](assets/elaborate_beethoven_right.png)
+
+
 
 
 

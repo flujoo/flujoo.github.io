@@ -268,7 +268,7 @@ pitch_motif_transposed = transpose(
 )
 ```
 
-Let's show the original and transposed motifs together:
+Let's show the original and the transposed motifs together:
 
 ```python
 show(
@@ -403,6 +403,34 @@ So far, I have talked only about harmonic motifs. To deal with non-harmonic moti
 ## Implementation of Elaboration and Reduction
 
 Simply speaking, elaboration is adding notes to a motif. The function `elaborate()` from [ch0p1n](https://github.com/flujoo/ch0p1n) serves the exact purpose.
+
+Let's try it on the motif defined earlier:
+
+```python
+from ch0p1n.motif import elaborate
+
+motif = elaborate(
+  pitch_motif = pitch_motif,
+  duration_motif = duration_motif,
+  reference = 2,
+  steps = [-1, -1],
+  scale = [0, 2, 4, 5, 7, 9, 11],
+  position = 'left'
+)
+```
+
+Show the original and the elaborated motifs together:
+
+```python
+show(
+  pitch_lines = [pitch_motif + motif[0]],
+  duration_lines = [duration_motif + motif[1]],
+  group = 1,
+  key = 0,
+  meter = '4/4',
+  clefs = ['g', 'f']
+)
+```
 
 
 

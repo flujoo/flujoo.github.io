@@ -1,6 +1,6 @@
 ---
 title: My Approach to Automatic Musical Composition
-date: "2022-02-01"
+date: "2022-02-02"
 tags:
     - music
 comment: true
@@ -276,7 +276,7 @@ show(
 
 The original motif is in the first bar, and the transposed the second. You can see how each pitch moves up by one step to fit the G major harmony.
 
-In some cases, however, `transpose()` does not work well. Still in the above example, suppose we transpose the motif down rather than up by one step:
+In some cases, however, `transpose()` does not work well. Still in the above example, suppose we transpose the motif down rather than up by one step with `step = -1`:
 
 ![](assets/transpose_fail.png)
 
@@ -293,144 +293,66 @@ from ch0p1n.motif import lead
 pitch_motifs = lead(
   pitch_motif = pitch_motif,
   harmony = [7, 11, 2], # G major harmony
-  steps = [-1, 0]
+  steps = [-1, 0],
+  complete = False,
+  similar = None
 )
 ```
 
-
-
-
-## Repeat Harmonic Motifs
-
-Repetition is an important and frequently used operation. We will first consider how to repeat harmonic motifs.
-
-In the Chopin's nocturne, a long accompaniment line (indicated by frames) can be generated from only one starting accompaniment motif under the operation repetition (indicated by arrows):
-
-![](assets/chopin_op9_no1_accompaniment_repetition.png)
-
-The basic idea behind this generation is:
-
-- Repeat a motif in a harmony to generate a new motif.
-- Repeat this new motif in the next harmony to generate another motif.
-- Repeat this process until a whole accompaniment line is generated.
-
-Then the core question is how to repeat a motif in a harmony.
-
-Let's have a look at the first two accompaniment motifs from the nocturne:
-
-![](assets/chopin_op9_no1_accompaniment_2_2.png)
-
-<audio controls>
-  <source src="assets/chopin_op9_no1_accompaniment_2.mp3" type="audio/mpeg">
-</audio>
-
-The background harmonies behind these two motifs are B♭m and F7. When the first motif is repeated in harmony F7, all pitches move to their nearest pitches in the new harmony, except for the first note which is a [pedal note](https://en.wikipedia.org/wiki/Pedal_point).
-
-For example, the second pitch of the first motif is F3 and that of the second motif is also F3. Since the harmony behind the second motif is F dominant 7th whose pitch classes include F, there is no need for F3 to change. Meanwhile, the third pitch of the first motif is D♭4, but there is no D♭ in the pitch classes of F dominant 7th, so it moves to a nearest pitch E♭4.
-
-![](assets/chopin_op9_no1_accompaniment_2_3.png)
-
-This is pretty much it. **To repeat a harmonic motif in a harmony, just move every pitch to its nearest neighbor in the harmony.**
-
-Please note that there may be more than one neighbor for a pitch. For example, in the Chopin's nocturne, the third pitch of the first motif is D♭4, and both C4 and E♭4 are its neighbors. Therefore, under repetition, more than one motif may be generated in the new harmony. However, usually not all of the generated motifs are equally good, so we need some mechanisms to screen out the bad ones. For example, some motifs may not have the same morphology as the original motif; some may not fully reify the background harmony. See my blog [Generate Accompaniment Progression](/en/generate-accompaniment-progression/) for more details.
-
-
-## Implementation of Repetition
-
-The function `lead()` from my Python package [ch0p1n](https://github.com/flujoo/ch0p1n) is for repeating harmonic motifs. The function got its name from the concept voice-leading, which means every note in a motif *leads* by step to the note(s) in a new harmony.
-
-Let's try this function on the first accompaniment motif from the Chopin's nocturne:
-
-![](assets/chopin_op9_no1_accompaniment_1.png)
-
-<audio controls>
-  <source src="assets/chopin_op9_no1_accompaniment_1.mp3" type="audio/mpeg">
-</audio>
-
-This motif can be represented as
-
-```python
-pitch_motif = [46, 53, 61, 58, 65, 53]
-# ['B-2', 'F3', 'D-4', 'B-3', 'F4', 'F3']
-
-duration_motif = [0.5] * 6
-```
-
-Its pitch and durational contents are represented separately.
-
-Suppose the harmony is F7, in which this motif is to be repeated. It can be represented as
-
-```python
-harmony = [5, 9, 0, 3]
-# ['F', 'A', 'C', 'E-']
-```
-
-Apply `lead()`:
-
-```python
-from ch0p1n.motif import lead
-
-pitch_motifs = lead(
-  pitch_motif = pitch_motif,
-  harmony = harmony,
-  steps = [-1, 0, 1],
-  complete = True,
-  similar = 'direction'
-)
-```
-
-`lead()` is applied only to the pitch contents of the motif. And the result is also a list of pitch contents. Before checking this result, let's have a look at the function's parameters:
-
-- `pitch_motif` is the pitch contents of a motif.
-
-- `harmony` is self-explanatory.
-
-- `steps` indicates how each pitch should move to generate new pitches in the given harmony. `steps = [-1, 0, 1]` means each pitch should stay if it fits the harmony, and move one step upward and downward to some neighbor pitches in the harmony.
-
-- `complete = True` means keep only the pitch lines that fully reify the harmony.
-
-- `similar = 'direction'` means keep only the pitch lines that have the same contour as the input pitch line.
-
-The result is quite long, even though we have specified `complete` and `similar`:
+`steps = [-1, 0]` means each pitch will move zero step if it fits the harmony, and one step downwards at the same time. The result returned is thus a list of pitch motifs rather than a single one. I will talk about parameters `complete` and `similar` later.
 
 ```python
 >>> pitch_motifs
 
 [
-  [45, 51, 60, 57, 63, 53],
-  [45, 51, 60, 57, 65, 51],
-  [45, 51, 60, 57, 65, 53],
-  # ...
-  # 74 pitch lines in total
+  [59, 62, 74, 71],
+  [59, 67, 74, 71]
 ]
 ```
 
-We can show the first six motifs in score with `show()`, which is built on Python package [music21](https://github.com/cuthbertLab/music21):
+There are two pitch motifs generated. Let's show them in score:
 
 ```python
-from ch0p1n.utils import show
-
 # to merge `pitch_motifs`
 from itertools import chain
 
-# show the first six motifs
-n = 6
-
 show(
-  pitch_lines = [list(chain(*pitch_motifs[:n]))],
-  duration_lines = [duration_motif * n],
-  group = 0, # the number of voices in the treble staff
-  key = -5,
-  meter = '6/4',
+  pitch_lines = [list(chain(*pitch_motifs))],
+  duration_lines = [duration_motif * 2],
+  group = 1,
+  key = 0,
+  meter = '4/4',
   clefs = ['g', 'f']
 )
 ```
 
-![](assets/lead_chopin.png)
+![](assets/lead.png)
 
-We can randomly select a pitch line to use, or write functions to further screen out unsatisfactory pitch lines, but I will stop here.
+While the motif in the first bar is as same as the unacceptable one generated by `transpose()`, the motif in the second bar is good.
 
-Before dealing with melodic motifs, which is more complex, let's first consider how to elaborate and reduce motifs.
+With `complete = True`, we can screen out the pitch motifs which are not harmonically complete or do not fully reify the given harmony:
+
+```python
+pitch_motifs = lead(
+  pitch_motif = pitch_motif,
+  harmony = [7, 11, 2], # G major harmony
+  steps = [-1, 0],
+  complete = True,
+  similar = None
+)
+```
+
+```python
+>>> pitch_motifs
+
+[
+  [59, 67, 74, 71]
+]
+```
+
+With parameter `similar`, we can screen out the pitch motifs which do not have the same contour as the original one. I will skip this part in this introductory blog.
+
+So far, I have only talked about harmonic motifs. To deal with melodic motifs, which is more complex, we need first to consider how to elaborate and reduce motifs.
 
 
 ## Implementation of Elaboration and Reduction
@@ -482,8 +404,6 @@ show(
 ```
 
 ![](assets/elaborate_beethoven_right.png)
-
-
 
 
 

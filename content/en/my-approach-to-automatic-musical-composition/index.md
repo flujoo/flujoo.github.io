@@ -188,7 +188,7 @@ There are different kinds of motifs. For example, two kinds of motifs are framed
 
 The motifs in the red frames can be called **accompaniment motifs** as they appear in the accompaniment line of this nocturne. They can also be called **harmonic motifs** as they consist of only harmonic notes. The motifs in the blue frames can be called **melodic motifs** as they appear in the melody line, or **non-harmonic motifs** if they contain non-harmonic notes.
 
-In the following several sections, I will talk about how to repeat motifs.
+In the following several sections, I will talk about how to manipulate motifs.
 
 
 ## Implementation of Repetition: `transpose()`
@@ -352,58 +352,12 @@ pitch_motifs = lead(
 
 With parameter `similar`, we can screen out the pitch motifs which do not have the same contour as the original one. I will skip this part in this introductory blog.
 
-So far, I have only talked about harmonic motifs. To deal with melodic motifs, which is more complex, we need first to consider how to elaborate and reduce motifs.
+So far, I have talked only about harmonic motifs. To deal with non-harmonic motifs, which is more complex, we need first to consider how to elaborate and reduce motifs.
 
 
 ## Implementation of Elaboration and Reduction
 
 Simply speaking, elaboration is adding notes to a motif. The function `elaborate()` from [ch0p1n](https://github.com/flujoo/ch0p1n) serves the exact purpose.
-
-Suppose there is a very simple motif:
-
-```python
-pitch_motif = [80, 77, None]
-duration_motif = [2, 1, 1]
-
-show(
-  pitch_lines = [pitch_motif],
-  duration_lines = [duration_motif],
-  group = 1,
-  key = -4,
-  meter = '4/4',
-  clefs = ['g', 'f']
-)
-```
-
-![](assets/elaborate_beethoven.png)
-
-We can elaborate it as:
-
-```python
-from ch0p1n.motif import elaborate
-
-elaborated = elaborate(
-  pitch_motif = pitch_motif,
-  duration_motif = duration_motif,
-  reference = 0,
-  steps = [-1, -1, -1],
-  scale = [5, 7, 8, 10, 0, 1, 4],
-  position = 'right',
-  ratio = 1/4,
-  relative = True
-)
-
-show(
-  pitch_lines = [elaborated[0]],
-  duration_lines = [elaborated[1]],
-  group = 1,
-  key = -4,
-  meter = '4/4',
-  clefs = ['g', 'f']
-)
-```
-
-![](assets/elaborate_beethoven_right.png)
 
 
 

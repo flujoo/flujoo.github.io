@@ -1,6 +1,6 @@
 ---
 title: My Approach to Automatic Musical Composition
-date: "2022-02-02"
+date: "2022-02-03"
 tags:
     - music
 comment: true
@@ -368,14 +368,14 @@ Now there leaves only one pitch motif, the good one:
 With parameter `similar`, we can screen out the pitch motifs which do not have the same contour as the original one. I will skip this part in this introductory blog.
 
 
-## Implementation of Repetition: `adapt()`
+## Implementation of Repetition: `thread()`
 
-The function `adapt()` is for repeating a motif across harmonies. Let's try it on the motif defined earlier:
+The function `thread()` is for repeating a motif in consecutive harmonies or *threading* a motif through harmonies. Let's try it on the motif defined earlier:
 
 ```python
-from ch0p1n.motif import adapt
+from ch0p1n.motif import thread
 
-pitch_motifs = adapt(
+pitch_motifs = thread(
   pitch_motif = pitch_motif,
   duration_motif = duration_motif,
   harmonies = [[5, 9, 0], [7, 11, 2]], # F, G
@@ -393,7 +393,7 @@ show(
 )
 ```
 
-![](assets/adapt.png)
+![](assets/thread.png)
 
 The first two notes of the motif are adapted to the F major harmony, while the last two notes to the G major harmony.
 

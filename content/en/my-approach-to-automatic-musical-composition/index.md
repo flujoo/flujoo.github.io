@@ -1,6 +1,6 @@
 ---
 title: My Approach to Automatic Musical Composition
-date: "2022-02-03"
+date: "2022-02-05"
 tags:
     - music
 comment: true
@@ -397,10 +397,10 @@ show(
 
 The first two notes of the motif are adapted to the F major harmony, while the last two notes to the G major harmony.
 
-So far, I have talked only about harmonic motifs. To deal with non-harmonic motifs, which is more complex, we need first to consider how to elaborate and reduce motifs.
+So far, I have talked only about harmonic motifs. To deal with non-harmonic motifs, which is more complex, we need first to consider how to elaborate motifs.
 
 
-## Implementation of Elaboration and Reduction
+## Implementation of Elaboration
 
 Simply speaking, elaboration is adding notes to a motif. The function `elaborate()` from [ch0p1n](https://github.com/flujoo/ch0p1n) serves the exact purpose.
 
@@ -431,6 +431,103 @@ show(
   clefs = ['g', 'f']
 )
 ```
+
+![](assets/elaborate.png)
+
+Two notes are prepended to the third note.
+
+Let's have a look at the code.
+
+The argument `reference` indicates where to add notes or elaborate the motif. For example, `reference = 2` means the notes are added at the third note. We can elaborate the last note instead:
+
+```python
+motif = elaborate(
+  pitch_motif = pitch_motif,
+  duration_motif = duration_motif,
+  reference = 3, # the last note
+  steps = [-1, -1],
+  scale = [0, 2, 4, 5, 7, 9, 11],
+  position = 'left'
+)
+```
+
+![](assets/elaborate_reference.png)
+
+The argument `steps` specifies the pitches of the notes to add. For example, `steps = [-1, -1]` indicates that the reference note should move one step downwards to generate the first note, then this note should move one step downwards to generate the second note. Let's add three descending notes with this argument:
+
+```python
+motif = elaborate(
+  pitch_motif = pitch_motif,
+  duration_motif = duration_motif,
+  reference = 2,
+  steps = [1, 1, 1], # three descending notes
+  scale = [0, 2, 4, 5, 7, 9, 11],
+  position = 'left'
+)
+```
+
+![](assets/elaborate_steps.png)
+
+The argument `scale` specifies the scale along which to move the reference note to generate the notes to add. For example, `scale = [0, 2, 4, 5, 7, 9, 11]` indicates that it is the C major scale. We can use C chromatic scale instead:
+
+```python
+motif = elaborate(
+  pitch_motif = pitch_motif,
+  duration_motif = duration_motif,
+  reference = 2,
+  steps = [-1, -1],
+  scale = list(range(12)), # C chromatic scale
+  position = 'left'
+)
+```
+
+![](assets/elaborate_scale.png)
+
+The argument `position` specifies the position of the added notes relative to the reference note. For example, `position = 'left'` indicates that the notes are added at the left side of the reference note. We can add the notes at the right side:
+
+```python
+motif = elaborate(
+  pitch_motif = pitch_motif,
+  duration_motif = duration_motif,
+  reference = 2,
+  steps = [-1, -1],
+  scale = [0, 2, 4, 5, 7, 9, 11],
+  position = 'right' # add the notes at the right side
+)
+```
+
+![](assets/elaborate_right.png)
+
+Please note that, with `'left'` and `'right'`, the added notes take durations from the reference note. If you want that the durations are taken from the note before or after the reference note, use `'previous'` or `'next'`. For example,
+
+```python
+motif = elaborate(
+  pitch_motif = pitch_motif,
+  duration_motif = duration_motif,
+  reference = 2,
+  steps = [-1, -1],
+  scale = [0, 2, 4, 5, 7, 9, 11],
+  position = 'previous' # take durations from the previous note
+)
+```
+
+![](assets/elaborate_previous.png)
+
+The argument `ratio` specifies the percentage of duration the added notes take. For example, `ratio = 1/2` means that the added notes take 50% of the duration of the reference note:
+
+```python
+motif = elaborate(
+  pitch_motif = pitch_motif,
+  duration_motif = duration_motif,
+  reference = 2,
+  steps = [-1, -1],
+  scale = [0, 2, 4, 5, 7, 9, 11],
+  position = 'left',
+  ratio = 1/2 # take 50% of the duration of the reference note
+)
+```
+
+![](assets/elaborate_ratio.png)
 
 
 

@@ -559,6 +559,72 @@ The arguments `start` and `end` specify the notes to remove. The argument `posit
 
 ## Repeat Non-Harmonic Motifs
 
+Non-harmonic motifs contain non-harmonic notes. For example, the following is a non-harmonic motif:
+
+![](assets/non_harmonic_circled.png)
+
+The background harmony is Fm, and the circled notes are non-harmonic since they do not fit the harmony.
+
+To repeat a non-harmonic motif,
+
+1. reduce it to contain only harmonic notes,
+2. repeat the reduced motif, and
+3. elaborate the repeated motif.
+
+Let's try this strategy on this motif.
+
+This motif can be represented as:
+
+```python
+pitch_motif = [65, 68, 72, 77, 80, 79, 77, 76, 77, None]
+duration_motif = [1, 1, 1, 1, 1.5, 1/6, 1/6, 1/6, 1, 1]
+```
+
+Reduce it:
+
+```python
+pitch_motif, duration_motif = reduce(
+  pitch_motif,
+  duration_motif,
+  start = 5,
+  end = 7,
+  position = 'left'
+)
+
+# the same below
+show(
+  [pitch_motif],
+  [duration_motif],
+  key = -4
+)
+```
+
+![](assets/non_harmonic_reduced.png)
+
+Repeat it in C7:
+
+```python
+pitch_motif = transpose(pitch_motif, [0, 4, 7, 10], 1)
+```
+
+![](assets/non_harmonic_repeated.png)
+
+Finally, elaborate it:
+
+```python
+pitch_motif, duration_motif = elaborate(
+  pitch_motif,
+  duration_motif,
+  reference = 4,
+  steps = [-1, -1, -1],
+  scale = [5, 7, 8, 10, 0, 1, 4],
+  position = 'right',
+  ratio = 1/4
+)
+```
+
+![](assets/non_harmonic_elaborated.png)
+
 
 
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.

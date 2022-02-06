@@ -1,6 +1,6 @@
 ---
 title: My Approach to Automatic Musical Composition
-date: "2022-02-05"
+date: "2022-02-06"
 tags:
     - music
 comment: true
@@ -528,6 +528,36 @@ motif = elaborate(
 ```
 
 ![](assets/elaborate_ratio.png)
+
+
+## Implementation of Reduction
+
+Reduction is the opposite of elaboration. It is removing notes from a motif. The corresponding function from [ch0p1n](https://github.com/flujoo/ch0p1n) is `reduce()`.
+
+Take the last motif from the previous section as an example:
+
+![](assets/reduce.png)
+
+Reduce it to the unelaborated version:
+
+```python
+from ch0p1n.motif import reduce
+
+motif = reduce(
+  pitch_motif = motif[0],
+  duration_motif = motif[1],
+  start = 2,
+  end = 3,
+  position = 'right'
+)
+```
+
+![](assets/reduce_original.png)
+
+The arguments `start` and `end` specify the notes to remove. The argument `position` specifies the reference note to which to add the durations of the removed notes.
+
+
+## Repeat Non-Harmonic Motifs
 
 
 

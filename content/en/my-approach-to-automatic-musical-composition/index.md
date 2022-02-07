@@ -1,6 +1,6 @@
 ---
 title: My Approach to Automatic Musical Composition
-date: "2022-02-06"
+date: "2022-02-07"
 tags:
     - music
 comment: true
@@ -601,7 +601,7 @@ show(
 
 ![](assets/non_harmonic_reduced.png)
 
-Repeat it in C7:
+Repeat it in C7 harmony:
 
 ```python
 pitch_motif = transpose(pitch_motif, [0, 4, 7, 10], 1)

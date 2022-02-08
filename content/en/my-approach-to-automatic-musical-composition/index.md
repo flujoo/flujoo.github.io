@@ -1,6 +1,6 @@
 ---
 title: My Approach to Automatic Musical Composition
-date: "2022-02-07"
+date: "2022-02-08"
 tags:
     - music
 comment: true
@@ -624,6 +624,53 @@ pitch_motif, duration_motif = elaborate(
 ```
 
 ![](assets/non_harmonic_elaborated.png)
+
+
+## Implementation of Fragmentation: `divide()`
+
+Fragmentation is breaking a motif up into several shorter motifs or taking a fragment from a motif. The corresponding functions from [ch0p1n](https://github.com/flujoo/ch0p1n) are `divide()` and `fragment()`.
+
+Consider the following motif from the Chopin's nocturne:
+
+![](assets/fragment.png)
+
+This motif can be represented as:
+
+```python
+pitch_motif = [82, 84, 85, 81, 82, 78] + [77]*4 + [78, 77, 75, 72, 73, 70]
+duration_motif = [0.5]*6 + [1]*4 + [0.5]*4 + [2, 1]
+```
+
+With `divide()`, we can divide this motif into, say, three shorter motifs of equal length:
+
+```python
+from ch0p1n.motif import divide
+
+motifs = divide(pitch_motif, duration_motif, 3)
+```
+
+```python
+>>> motifs
+
+[
+  ([82, 84, 85, 81, 82, 78, 77], [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1]),
+  ([77, 77, 77, 78, 77], [1, 1, 1, 0.5, 0.5]),
+  ([75, 72, 73, 70], [0.5, 0.5, 2, 1])
+]
+```
+
+```python
+for motif in motifs:
+  show([motif[0]], [motif[1]], key = -5)
+```
+
+![](assets/divide_1.png)
+
+![](assets/divide_2.png)
+
+![](assets/divide_3.png)
+
+
 
 
 

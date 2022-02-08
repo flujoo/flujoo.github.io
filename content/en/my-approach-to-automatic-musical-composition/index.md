@@ -632,7 +632,7 @@ Fragmentation is breaking a motif up into several shorter motifs or taking a fra
 
 Consider the following motif from the Chopin's nocturne:
 
-![](assets/fragment.png)
+![](assets/fragmentation.png)
 
 This motif can be represented as:
 
@@ -671,6 +671,28 @@ for motif in motifs:
 ![](assets/divide_3.png)
 
 
+## Implementation of Fragmentation: `fragment()`
+
+With `fragment()`, we can take a fragment from a motif. For example,
+
+```python
+from ch0p1n.motif import fragment
+
+motif = fragment(
+  pitch_motif,
+  duration_motif,
+  start = 6,
+  end = 9,
+  ratio = 1/2,
+  fit = 'right'
+)
+
+show([motif[0]], [motif[1]], key = -5, meter = '6/4')
+```
+
+![](assets/fragment.png)
+
+The arguments `start` and `end` specify the start note and the end note of the fragment. `ratio = 1/2` indicates that the fragment's length should be 50% of the original motif, and to accomplish this, `fit = 'right'` indicates that the end note should be prolonged.
 
 
 

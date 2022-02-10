@@ -1,6 +1,6 @@
 ---
 title: My Approach to Automatic Musical Composition
-date: "2022-02-08"
+date: "2022-02-10"
 tags:
     - music
 comment: true
@@ -693,6 +693,42 @@ show([motif[0]], [motif[1]], key = -5, meter = '6/4')
 ![](assets/fragment.png)
 
 The arguments `start` and `end` specify the start note and the end note of the fragment. `ratio = 1/2` indicates that the fragment's length should be 50% of the original motif, and to accomplish this, `fit = 'right'` indicates that the end note should be prolonged.
+
+
+## Case Study: Replicate Beethoven's Sonata
+
+Now it is time to put it all together. Let's try to generate the beginning of the Beethoven's sonata from a small amount of materials, under the operations that we have been talking about.
+
+To simplify the problem and to make patterns more discernible, I will remove slurs, articulations, dynamics, grace notes, and some other notes from the original score:
+
+![](assets/beethoven_sonata_simplified.png)
+
+This piece consists of two voices or musical lines, the melody line in the treble staff and the accompaniment line in the bass staff.
+
+The melody line, in my analysis, consists of seven melodic motifs, as indicated below:
+
+![](assets/beethoven_sonata_melody.png)
+
+And all of them can be generated from the following melodic motif:
+
+![](assets/basic_idea_reduced.png)
+
+The accompaniment line consists of seven accompaniment motifs:
+
+![](assets/beethoven_sonata_accompaniment.png)
+
+And these motifs can be generated from:
+
+![](assets/beethoven_sonata_accompaniment_core.png)
+
+In summary, to generate the beginning of the Beethoven's sonata, the core materials are
+
+1. the melodic motif to generate the melody line,
+2. the accompaniment motif to generate the accompaniment line,
+3. harmonies for repetition of motifs, and
+4. the scale for elaboration of motifs.
+
+Let's turn this analysis into code.
 
 
 

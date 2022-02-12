@@ -1,6 +1,6 @@
 ---
 title: My Approach to Automatic Musical Composition
-date: "2022-02-10"
+date: "2022-02-12"
 tags:
     - music
 comment: true
@@ -729,6 +729,220 @@ In summary, to generate the beginning of the Beethoven's sonata, the core materi
 4. the scale for elaboration of motifs.
 
 Let's turn this analysis into code.
+
+Represent the core melodic motif:
+
+```python
+melodic_pitch_motif = [65, 68, 72, 77, 80, 77]
+melodic_duration_motif = [1, 1, 1, 1, 2, 2]
+```
+
+Represent the core accompaniment motif:
+
+```python
+accompaniment_pitch_motif = [[60, 56, 53]]
+accompaniment_duration_motif = [8]
+```
+
+Represent the harmonies and the scale:
+
+```python
+# Fm, C7, Fm, C7, Fm, Gdim, C
+harmonies = [
+  [5, 8, 0],
+  [0, 4, 7, 10],
+  [5, 8, 0],
+  [0, 4, 7, 10],
+  [5, 8, 0],
+  [7, 10, 1],
+  [0, 4, 7]
+]
+
+# F harmonic minor scale
+scale = [5, 7, 8, 10, 0, 1, 4]
+```
+
+Generate the music:
+
+```python
+def generate_beethoven_sonata(
+      melodic_pitch_motif,
+      melodic_duration_motif,
+      accompaniment_pitch_motif,
+      accompaniment_duration_motif,
+      harmonies,
+      scale
+    ):
+
+    # melody line
+    melodic_pitch_line = []
+    melodic_duration_line = []
+
+    # accompaniment line
+    accompaniment_pitch_line = []
+    accompaniment_duration_line = []
+
+    # abbreviation rules:
+    # 'mpm1' is short for 'melodic pitch motif 1'
+    # 'mdm1' is short for 'melodic duration motif 1'
+    # 'apm1' is short for 'accompaniment pitch motif 1'
+
+    # shorten names for convenience
+    mpm = melodic_pitch_motif
+    mdm = melodic_duration_motif
+    apm = accompaniment_pitch_motif
+    adm = accompaniment_duration_motif
+
+
+    # melodic motif 1 ------------------------------------------
+    mpm1, mdm1 = elaborate(
+      mpm,
+      mdm,
+      reference = 5,
+      steps = [None],
+      scale = scale,
+      position = 'right'
+    )
+
+    mpm1, mdm1 = elaborate(
+      mpm1,
+      mdm1,
+      reference = 4,
+      steps = [-1, -1, -1],
+      scale = scale,
+      position = 'right',
+      ratio = 1/4
+    )
+
+    melodic_pitch_line.extend(mpm1)
+    melodic_duration_line.extend(mdm1)
+
+
+    # melodic motif 2 ------------------------------------------
+    mpm2 = transpose(mpm, harmonies[1], 1)
+
+    mpm2, mdm2 = elaborate(
+      mpm2,
+      mdm,
+      reference = 5,
+      steps = [None],
+      scale = scale,
+      position = 'right'
+    )
+
+    mpm2, mdm2 = elaborate(
+      mpm2,
+      mdm2,
+      reference = 4,
+      steps = [-1, -1, -1],
+      scale = scale,
+      position = 'right',
+      ratio = 1/4
+    )
+
+    melodic_pitch_line.extend(mpm2)
+    melodic_duration_line.extend(mdm2)
+
+
+    # melodic motif 3 ------------------------------------------
+    mpm3, mdm3 = divide(mpm1, mdm1, 2)[1]
+    melodic_pitch_line.extend(mpm3)
+    melodic_duration_line.extend(mdm3)
+
+
+    # melodic motif 4 ------------------------------------------
+    mpm4, mdm4 = divide(mpm2, mdm2, 2)[1]
+    melodic_pitch_line.extend(mpm4)
+    melodic_duration_line.extend(mdm4)
+
+
+    # melodic motif 5 ------------------------------------------
+    mpm5, mdm5 = divide(mpm, mdm, 4)[2]
+    mpm5 = transpose(mpm5, harmonies[4], 1)
+    melodic_pitch_line.extend(mpm5)
+    melodic_duration_line.extend(mdm5)
+
+
+    # melodic motif 6 ------------------------------------------
+    mpm6, mdm6 = divide(mpm, mdm, 4)[2]
+    mpm6 = transpose(mpm6, harmonies[5], 1)
+    mpm6, mdm6 = elaborate(mpm6, mdm6, 0, [-1]*3, scale)
+    melodic_pitch_line.extend(mpm6)
+    melodic_duration_line.extend(mdm6)
+
+
+    # melodic motif 7 ------------------------------------------
+    mpm7, mdm7 = divide(mpm, mdm, 4)[2]
+    mpm7 = transpose(mpm7, harmonies[6], -2)
+    mpm7, mdm7 = elaborate(mpm7, mdm7, 0, [1], scale, 'left')
+    melodic_pitch_line.extend(mpm7)
+    melodic_duration_line.extend(mdm7)
+
+
+    # accompaniment motif 1 ------------------------------------
+    apm1, adm1 = elaborate(apm, adm, 0, [None], scale, 'left')
+    apm1, adm1 = elaborate(apm1, adm1, 1, [0, 0, None], scale, 'left')
+    accompaniment_pitch_line.extend(apm1)
+    accompaniment_duration_line.extend(adm1)
+
+
+    # accompaniment motif 2 ------------------------------------
+    apm2 = transpose(apm, harmonies[1], -1)
+    apm2, adm2 = elaborate(apm2, adm, 0, [None], scale, 'left')
+    apm2, adm2 = elaborate(apm2, adm2, 1, [0, 0, None], scale, 'left')
+    accompaniment_pitch_line.extend(apm2)
+    accompaniment_duration_line.extend(adm2)
+
+
+    # accompaniment motif 3 ------------------------------------
+    apm3, adm3 = divide(apm1, adm1, 2)[1]
+    accompaniment_pitch_line.extend(apm3)
+    accompaniment_duration_line.extend(adm3)
+
+
+    # accompaniment motif 4 ------------------------------------
+    apm4, adm4 = divide(apm2, adm2, 2)[1]
+    apm4 = transpose(apm4, harmonies[3], 1)
+    accompaniment_pitch_line.extend(apm4)
+    accompaniment_duration_line.extend(adm4)
+
+
+    # accompaniment motif 5 ------------------------------------
+    apm5 = transpose(apm4, harmonies[4], 1)
+    accompaniment_pitch_line.extend(apm5)
+    accompaniment_duration_line.extend(adm4)
+
+
+    # accompaniment motif 6 ------------------------------------
+    apm6 = transpose(apm5, harmonies[5], 1)
+    accompaniment_pitch_line.extend(apm6)
+    accompaniment_duration_line.extend(adm4)
+
+
+    # accompaniment motif 7 ------------------------------------
+    apm7 = transpose(apm6, harmonies[6], 1)
+    accompaniment_pitch_line.extend(apm7)
+    accompaniment_duration_line.extend(adm4)
+
+
+    # show score
+    show(
+      [melodic_pitch_line, accompaniment_pitch_line],
+      [melodic_duration_line, accompaniment_duration_line],
+      key = -4
+    )
+```
+
+```python
+generate_beethoven_sonata(
+  melodic_pitch_motif,
+  melodic_duration_motif,
+  accompaniment_pitch_motif,
+  accompaniment_duration_motif,
+  harmonies,
+  scale
+)
+```
 
 
 

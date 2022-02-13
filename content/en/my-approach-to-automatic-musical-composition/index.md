@@ -1,6 +1,6 @@
 ---
 title: My Approach to Automatic Musical Composition
-date: "2022-02-12"
+date: "2022-02-13"
 tags:
     - music
 comment: true
@@ -708,9 +708,9 @@ show([motif[0]], [motif[1]], key = -5, meter = '6/4')
 The arguments `start` and `end` specify the start note and the end note of the fragment. `ratio = 1/2` indicates that the fragment's length should be 50% of the original motif, and to accomplish this, `fit = 'right'` indicates that the end note should be prolonged.
 
 
-## Case Study: Replicate Beethoven's Sonata
+## Case Study: Replicate and Vary Beethoven's Sonata
 
-Now it is time to put it all together. Let's try to generate the beginning of the Beethoven's sonata from a small amount of materials, under the operations that we have been talking about.
+Now it is time to put it all together. Let's first try to generate the beginning of the Beethoven's sonata from a small amount of materials, under the operations that we have been talking about.
 
 To simplify the problem and to make patterns more discernible, I will remove slurs, articulations, dynamics, grace notes, and some other notes from the original score:
 
@@ -760,7 +760,7 @@ accompaniment_duration_motif = [8]
 Represent the harmonies and the scale:
 
 ```python
-# Fm, C7, Fm, C7, Fm, Gdim, C
+# Fm, C7, Fm, C7, Fm, Gdim, C7
 harmonies = [
   [5, 8, 0],
   [0, 4, 7, 10],
@@ -768,14 +768,14 @@ harmonies = [
   [0, 4, 7, 10],
   [5, 8, 0],
   [7, 10, 1],
-  [0, 4, 7]
+  [0, 4, 7, 10]
 ]
 
 # F harmonic minor scale
 scale = [5, 7, 8, 10, 0, 1, 4]
 ```
 
-Generate the music:
+Represent the generative mechanism:
 
 ```python
 def generate_beethoven_sonata(
@@ -915,36 +915,41 @@ def generate_beethoven_sonata(
 
     # accompaniment motif 4 ------------------------------------
     apm4, adm4 = divide(apm2, adm2, 2)[1]
-    apm4 = transpose(apm4, harmonies[3], 1)
+    apm4 = transpose(apm3, harmonies[3], 1)
     accompaniment_pitch_line.extend(apm4)
     accompaniment_duration_line.extend(adm4)
 
 
     # accompaniment motif 5 ------------------------------------
-    apm5 = transpose(apm4, harmonies[4], 1)
+    apm5 = transpose(apm3, harmonies[4], 1)
+    apm5, adm5 = divide(apm5, adm4, 2)[0]
     accompaniment_pitch_line.extend(apm5)
-    accompaniment_duration_line.extend(adm4)
+    accompaniment_duration_line.extend(adm5)
 
 
     # accompaniment motif 6 ------------------------------------
-    apm6 = transpose(apm5, harmonies[5], 1)
+    apm6 = transpose(apm3, harmonies[5], 2)
+    apm6, adm6 = divide(apm6, adm4, 2)[0]
     accompaniment_pitch_line.extend(apm6)
-    accompaniment_duration_line.extend(adm4)
+    accompaniment_duration_line.extend(adm5)
 
 
     # accompaniment motif 7 ------------------------------------
-    apm7 = transpose(apm6, harmonies[6], 1)
+    apm7 = transpose(apm3, harmonies[6], 2)
+    apm7, adm7 = divide(apm7, adm4, 2)[0]
     accompaniment_pitch_line.extend(apm7)
-    accompaniment_duration_line.extend(adm4)
+    accompaniment_duration_line.extend(adm5)
 
 
-    # show score
+    # show score -----------------------------------------------
     show(
       [melodic_pitch_line, accompaniment_pitch_line],
       [melodic_duration_line, accompaniment_duration_line],
       key = -4
     )
 ```
+
+Generate the music:
 
 ```python
 generate_beethoven_sonata(
@@ -957,6 +962,35 @@ generate_beethoven_sonata(
 )
 ```
 
+![](assets/beethoven_sonata_replicate.png)
+
+This is pretty close. We can make the function `generate_beethoven_sonata()` more concise, or more fine-tuned to generate a score closer to the original one, but I will stop here.
+
+The most interesting thing is once we have captured the generative mechanism with function `generate_beethoven_sonata()`, we can supply other inputs to it to generate different music. For example,
+
+```python
+melodic_pitch_motif = [65, 67, 72, 73, 79, 77]
+melodic_duration_motif = [1, 1, 1, 1, 2, 2]
+scale = [5, 7, 10, 0, 1]
+
+harmonies = [
+  [5, 7, 8, 0],
+  [0, 1, 7, 10],
+  [5, 7, 8, 0],
+  [0, 1, 7, 10],
+  [5, 7, 8, 0],
+  [5, 7, 10, 1],
+  [0, 1, 7, 10]
+]
+```
+
+![](assets/beethoven_sonata_vary.png)
+
+<audio controls>
+  <source src="assets/beethoven_sonata_vary.mp3" type="audio/mpeg">
+</audio>
+
+This might be how a Japanese Beethoven would have composed it.
 
 
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.

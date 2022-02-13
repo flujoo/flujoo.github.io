@@ -468,6 +468,19 @@ motif = elaborate(
 
 ![](assets/elaborate_steps.png)
 
+With `steps`, you can also repeat some note or add rests to a motif, as in the following example:
+
+```python
+motif = elaborate(
+  pitch_motif = pitch_motif,
+  duration_motif = duration_motif,
+  reference = 2,
+  steps = [0, 0, None] # repeat the note twice then add a rest
+)
+```
+
+![](assets/elaborate_rest.png)
+
 The argument `scale` specifies the scale along which to move the reference note to generate the notes to add. For example, `scale = [0, 2, 4, 5, 7, 9, 11]` indicates that it is the C major scale. We can use C chromatic scale instead:
 
 ```python

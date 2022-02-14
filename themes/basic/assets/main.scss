@@ -12,6 +12,7 @@ $color-dark    : #111;
 $size-text : 16px;
 $size-h1   : 40px;
 $size-h2   : 24px;
+$size-h3   : 18px;
 $size-meta : 14px;
 
 body {
@@ -32,6 +33,10 @@ h1 {
 h2 {
     font-size: $size-h2;
     margin-top: 50px;
+}
+
+h3 {
+    font-size: $size-h3;
 }
 
 .meta {

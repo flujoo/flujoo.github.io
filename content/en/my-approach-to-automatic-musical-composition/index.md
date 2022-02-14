@@ -1020,7 +1020,7 @@ I have only very general knowledge of deep learning, but I think it is more prom
 
 Some comments say the final generated music sounds terrible, which I can only partially agree.
 
-All music pieces in this blog are generated with [MuseScore](https://musescore.org/en). To make the music sound less mechanical or less terrible, you need to carefully adjust dynamics, tempos, pedals, etc. And even so, the music may still sound unsatisfactory. The original Beethoven's sonate generated with MuseScore sounds bad even with dynamics and articulations added.
+All music pieces in this blog are generated with [MuseScore](https://musescore.org/en). To make the music sound less mechanical or less terrible, you need to carefully adjust dynamics, tempos, pedals, etc. And even so, the music may still sound unsatisfactory. The original Beethoven's sonata generated with MuseScore sounds bad even with dynamics and articulations added.
 
 However, [ch0p1n](https://github.com/flujoo/ch0p1n) can only deal with pitch and durational aspects of music for now, but to make music sound good, you need to adjust a lot of variables. This is also why I said deep learning is more promising.
 

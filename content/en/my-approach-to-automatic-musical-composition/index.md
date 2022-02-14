@@ -993,6 +993,42 @@ harmonies = [
 This might be how a Japanese Beethoven would have composed it.
 
 
+## Discussion
+
+Here are my responses to some comments on [Hacker News](https://news.ycombinator.com/item?id=30321645).
+
+### Limitations
+
+To be completely automatic, [ch0p1n](https://github.com/flujoo/ch0p1n) should be able to
+
+1. analyze
+2. generate
+3. manipulate
+4. select
+
+musical materials to generate music.
+
+Specifically, it should be able to analyze musical structures, generate core musical materials, manipulate these materials to produce more, and select musically good materials to make semantically rather than syntactically correct music.
+
+For now, [ch0p1n](https://github.com/flujoo/ch0p1n) can at best provide only a framework for manipulating given materials to generate music.
+
+### Deep Learning
+
+I have only very general knowledge of deep learning, but I think it is more promising than any other manual approach in automatic composition. I will spend time study it.
+
+### Terrible Result?
+
+Some comments say the final generated music sounds terrible, which I can only partially agree.
+
+All music pieces in this blog are generated with [MuseScore](https://musescore.org/en). To make the music sound less mechanical or less terrible, you need to carefully adjust dynamics, tempos, pedals, etc. And even so, the music may still sound unsatisfactory. The original Beethoven's sonate generated with MuseScore sounds bad even with dynamics and articulations added.
+
+However, [ch0p1n](https://github.com/flujoo/ch0p1n) can only deal with pitch and durational aspects of music for now, but to make music sound good, you need to adjust a lot of variables. This is also why I said deep learning is more promising.
+
+Some comments think the terribleness results from that [ch0p1n](https://github.com/flujoo/ch0p1n) can only generate syntactically correct music which may be musically meaningless. While I agree that [ch0p1n](https://github.com/flujoo/ch0p1n) has this limitation, I do believe in most cases, syntactically correct music is good enough to sound good.
+
+I will generate more convincing music with [ch0p1n](https://github.com/flujoo/ch0p1n) in the future.
+
+
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.
 
 [^2]: Caplin, William E. (2013). Analyzing Classical Form: an Approach for the Classroom. Oxford and New York: Oxford University Press.

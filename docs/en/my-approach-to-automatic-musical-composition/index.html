@@ -692,6 +692,27 @@
   <source src="assets/beethoven_sonata_vary.mp3" type="audio/mpeg">
 </audio>
 <p>This might be how a Japanese Beethoven would have composed it.</p>
+<h2 id="discussion">Discussion</h2>
+<p>Here are my responses to some comments on <a href="https://news.ycombinator.com/item?id=30321645">Hacker News</a>.</p>
+<h3 id="limitations">Limitations</h3>
+<p>To be completely automatic, <a href="https://github.com/flujoo/ch0p1n">ch0p1n</a> should be able to</p>
+<ol>
+<li>analyze</li>
+<li>generate</li>
+<li>manipulate</li>
+<li>select</li>
+</ol>
+<p>musical materials to generate music.</p>
+<p>Specifically, it should be able to analyze musical structures, generate core musical materials, manipulate these materials to produce more, and select musically good materials to make semantically rather than syntactically correct music.</p>
+<p>For now, <a href="https://github.com/flujoo/ch0p1n">ch0p1n</a> can at best provide only a framework for manipulating given materials to generate music.</p>
+<h3 id="deep-learning">Deep Learning</h3>
+<p>I have only very general knowledge of deep learning, but I think it is more promising than any other manual approach in automatic composition. I will spend time study it.</p>
+<h3 id="terrible-result">Terrible Result?</h3>
+<p>Some comments say the final generated music sounds terrible, which I can only partially agree.</p>
+<p>All music pieces in this blog are generated with <a href="https://musescore.org/en">MuseScore</a>. To make the music sound less mechanical or less terrible, you need to carefully adjust dynamics, tempos, pedals, etc. And even so, the music may still sound unsatisfactory. The original Beethoven&rsquo;s sonate generated with MuseScore sounds bad even with dynamics and articulations added.</p>
+<p>However, <a href="https://github.com/flujoo/ch0p1n">ch0p1n</a> can only deal with pitch and durational aspects of music for now, but to make music sound good, you need to adjust a lot of variables. This is also why I said deep learning is more promising.</p>
+<p>Some comments think the terribleness results from that <a href="https://github.com/flujoo/ch0p1n">ch0p1n</a> can only generate syntactically correct music which may be musically meaningless. While I agree that <a href="https://github.com/flujoo/ch0p1n">ch0p1n</a> has this limitation, I do believe in most cases, syntactically correct music is good enough to sound good.</p>
+<p>I will generate more convincing music with <a href="https://github.com/flujoo/ch0p1n">ch0p1n</a> in the future.</p>
 <section class="footnotes" role="doc-endnotes">
 <hr>
 <ol>

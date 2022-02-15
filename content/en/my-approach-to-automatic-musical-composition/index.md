@@ -1005,12 +1005,15 @@ To be completely automatic, [ch0p1n](https://github.com/flujoo/ch0p1n) should be
 2. generate
 3. manipulate
 4. select
+5. organize
 
 musical materials to generate music.
 
-Specifically, it should be able to analyze musical structures, generate core musical materials, manipulate these materials to produce more, and select musically good materials to make semantically rather than syntactically correct music.
+Specifically, it should be able to analyze musical structures, generate core musical materials, manipulate these materials to produce more, select musically good materials, and organize them into semantically rather than syntactically correct music.
 
-For now, [ch0p1n](https://github.com/flujoo/ch0p1n) can at best provide only a framework for manipulating given materials to generate music.
+For now, [ch0p1n](https://github.com/flujoo/ch0p1n) can only provide a framework for manipulating given materials to generate music.
+
+However, even with only this functionality, [ch0p1n](https://github.com/flujoo/ch0p1n) are powerful enough to produce interesting and non-trivial music.
 
 ### Deep Learning
 
@@ -1022,11 +1025,11 @@ Some comments say the final generated music sounds terrible, which I can only pa
 
 All music pieces in this blog are generated with [MuseScore](https://musescore.org/en). To make the music sound less mechanical or less terrible, you need to carefully adjust dynamics, tempos, pedals, etc. And even so, the music may still sound unsatisfactory. The original Beethoven's sonata generated with MuseScore sounds bad even with dynamics and articulations added.
 
-However, [ch0p1n](https://github.com/flujoo/ch0p1n) can only deal with pitch and durational aspects of music for now, but to make music sound good, you need to adjust a lot of variables. This is also why I said deep learning is more promising.
+However, [ch0p1n](https://github.com/flujoo/ch0p1n) can only deal with pitch and durational aspects of music for now, but to make music sound good, you need to adjust a tremendous amount of variables. This is also why I said deep learning is more promising.
 
 Some comments think the terribleness results from that [ch0p1n](https://github.com/flujoo/ch0p1n) can only generate syntactically correct music which may be musically meaningless. While I agree that [ch0p1n](https://github.com/flujoo/ch0p1n) has this limitation, I do believe in most cases, syntactically correct music is good enough to sound good.
 
-I will generate more convincing music with [ch0p1n](https://github.com/flujoo/ch0p1n) in the future.
+I will try to generate more convincing music with [ch0p1n](https://github.com/flujoo/ch0p1n) in the future.
 
 
 [^1]: Nierhaus, G. (2009). Algorithmic Composition: Paradigms of Automated Music Generation. Springer Science & Business Media.

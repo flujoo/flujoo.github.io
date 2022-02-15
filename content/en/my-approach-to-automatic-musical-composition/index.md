@@ -1001,11 +1001,11 @@ Here are my responses to some comments on [Hacker News](https://news.ycombinator
 
 To be completely automatic, [ch0p1n](https://github.com/flujoo/ch0p1n) should be able to
 
-1. analyze
-2. generate
-3. manipulate
-4. select
-5. organize
+- analyze
+- generate
+- manipulate
+- select
+- organize
 
 musical materials to generate music.
 

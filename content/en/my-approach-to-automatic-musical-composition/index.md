@@ -990,6 +990,8 @@ harmonies = [
   <source src="assets/beethoven_sonata_vary.mp3" type="audio/mpeg">
 </audio>
 
+Update: here is [a lovely interpretation](https://twitter.com/miso_soup3/status/1493117731272794112) by [@miso_soup3](https://twitter.com/miso_soup3).
+
 This might be how a Japanese Beethoven would have composed it.
 
 

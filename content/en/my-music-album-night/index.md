@@ -52,4 +52,4 @@ It is two o'clock a.m. You have just got out of a bar and are now walking on a s
 
 [Score](scores/rainy.pdf)
 
-It is late in the night. A chill wind is blowing outside. You feel it is about to rain. An unsettled feeling reminds you of a similar night many years ago. Faces in your memories are so unclear. What is left is only a feeling of suspense. You remember you felt cold, confused and frustrated. Where are they now? You ask youself. The rain suddenly comes down and soon stops. Then there is only an ominous silence.
+It is late in the night. A cold wind is blowing outside. You feel it is about to rain. An unsettled feeling reminds you of a similar night many years ago. Faces in your memories are so unclear. What is left is only a feeling of suspense. You remember you felt cold, confused and frustrated. Where are they now? You ask youself. A heavy rain suddenly comes down and soon stops. Then there is only an ominous silence.

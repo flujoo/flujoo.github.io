@@ -19,7 +19,7 @@ Some of my projects:
 - Python package [ch0p1n](https://github.com/flujoo/ch0p1n) for automatic composition
 - music album [Night](/en/my-music-album-night)
 - [other music](/en/my-early-music)
-- [a poem](https://flujoo.github.io/papa.js/) with JavaScript effect
+- book [Data Science of Pink Floyd](/assets/data-science-of-pink-floyd.pdf)
 
 
 ## Donation

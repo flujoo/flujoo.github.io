@@ -10,7 +10,7 @@ I write code, compose music, and write code that composes music.
 
 [My Chinese blog](/cn) is mainly about science-based learning skills.
 
-[RSS](/index.xml) | <renfeimao@gmail.com> | [Buy Me a Coffee](https://ko-fi.com/flujoo)
+[RSS](/index.xml)
 
 
 ## Projects
@@ -47,3 +47,10 @@ Also check [my other music](/en/my-early-music/).
 The idea behind the book *Data Science of Pink Floyd* is to collect and analyze data about the band Pink Floyd with R data science tools.
 
 The book is still in progress.
+
+
+## Coda
+
+Contact me at <renfeimao@gmail.com>.
+
+If you find my works helpful, consider [buy me a coffee](https://ko-fi.com/flujoo).

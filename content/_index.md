@@ -4,24 +4,46 @@ title: flujoo
 
 ## About
 
-I compose music, write code, and am good at self-learning.
+I write code, compose music, and write code that composes music.
 
-[My blog](/en) ([中文](/cn)) is about these topics. Get [RSS](/index.xml).
+[My English blog](/en) is about music theory and music programming.
 
-Contact me at renfeimao@gmail.com.
+[My Chinese blog](/cn) is mainly about science-based learning skills.
+
+[RSS](/index.xml) | <renfeimao@gmail.com> | [Buy Me a Coffee](https://ko-fi.com/flujoo)
 
 
 ## Projects
 
-Some of my projects:
+### R Package *gm* for Music Generation
 
-- R package [gm](https://github.com/flujoo/gm) for music score and audio generation
-- Python package [ch0p1n](https://github.com/flujoo/ch0p1n) for automatic composition
-- music album [Night](/en/my-music-album-night)
-- [other music](/en/my-early-music)
-- book [Data Science of Pink Floyd](/assets/data-science-of-pink-floyd.pdf)
+[Github](https://github.com/flujoo/gm) | [Complete Guide](https://flujoo.github.io/gm/articles/gm.html)
+
+R package *gm* provides an elegant language with which you can create music scores and audio files with ease. It works smoothly with R Markdown and can embed music in HTML and PDF files. It is useful for music education and algorithmic music composition.
 
 
-## Donation
+### Python Package *ch0p1n* for Automatic Composition
 
-If you find my site helpful, consider buy me a coffee on <https://ko-fi.com/flujoo>.
+[Github](https://github.com/flujoo/ch0p1n) | [Introduction](/en/my-approach-to-automatic-musical-composition/)
+
+Python package *ch0p1n* provides a framework for manipulation of music motifs to generate music. The basic idea is that music can be generated from a small amount of core materials under some common operations such as repetition and elaboration.
+
+This package is only a prototype for now.
+
+
+### Music Album *Night*
+
+[Audio and Scores](/en/my-music-album-night/)
+
+The music album *Night* is written for solo piano. It describes images and subtle feelings related to night.
+
+Also check [my other music](/en/my-early-music/).
+
+
+### Book *Data Science of Pink Floyd*
+
+[PDF](/assets/data-science-of-pink-floyd.pdf)
+
+The idea behind the book *Data Science of Pink Floyd* is to collect and analyze data about the band Pink Floyd with R data science tools.
+
+The book is still in progress.

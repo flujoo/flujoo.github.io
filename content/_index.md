@@ -2,51 +2,51 @@
 title: Renfei Mao
 ---
 
+
 ## About
 
 I write code, compose music, and write code that composes music.
 
-[My English blog](/en) is about music theory and music programming.
+As a software developer, I am interested in music generation. My works have received much positive feedback from researchers and developers. As a music composer, my pursuit is to create music that precisely captures subtle or complex emotions.
 
-[My Chinese blog](/cn) is mainly about science-based learning skills.
 
-[RSS](/index.xml)
+## My Blog
+
+[English](/en) | [Chinese](/cn) | [RSS](/index.xml)
+
+My English blog is about music theory, composition, and programming.
+
+My Chinese blog is mainly about education, psychology, and self-learning skills.
 
 
 ## Projects
 
-### R Package *gm* for Music Generation
+### R Package *gm* for Music Score and Audio Generation
 
 [Github](https://github.com/flujoo/gm) | [Complete Guide](https://flujoo.github.io/gm/articles/gm.html)
 
-R package *gm* provides an elegant language with which you can create music scores and audio files with ease. It works smoothly with R Markdown and can embed music in HTML and PDF files. It is useful for music education and algorithmic music composition.
+Easily generate music scores and audio files in HTML and PDF files. Useful for music education, musicological research, and algorithmic music composition.
 
 
 ### Python Package *ch0p1n* for Automatic Composition
 
 [Github](https://github.com/flujoo/ch0p1n) | [Introduction](/en/my-approach-to-automatic-musical-composition/)
 
-Python package *ch0p1n* provides a framework for manipulation of music motifs to generate music. The basic idea is that music can be generated from a small amount of core materials under some common operations such as repetition and elaboration.
-
-This package is only a prototype for now.
+Manipulate music motifs to generate music. The key idea is that even structurally complex music can be generated from a small amount of core materials under some common operations such as repetition and elaboration. This package is only a prototype for now.
 
 
-### Music Album *Night*
+### Classical Music Album *Night*
 
 [Audio and Scores](/en/my-music-album-night/)
 
-The music album *Night* is written for solo piano. It describes images and subtle feelings related to night.
-
-Also check [my other music](/en/my-early-music/).
+Images and subtle feelings related to night. Written for solo piano. Also check [my other music](/en/my-early-music/).
 
 
 ### Book *Data Science of Pink Floyd*
 
 [PDF](/assets/data-science-of-pink-floyd.pdf)
 
-The idea behind the book *Data Science of Pink Floyd* is to collect and analyze data about the band Pink Floyd with R data science tools.
-
-The book is still in progress.
+Collect and analyze any data about Pink Floyd. R data science tools are used. Still in progress.
 
 
 ## Coda
